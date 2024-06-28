@@ -17,12 +17,11 @@ int fd_mouse;
 pthread_mutex_t lock;
 struct input_event ev;
 
-unsigned int rel_x;
-unsigned int address = 3;
-unsigned int rel_y = 439;
-sprite_variation_t variation = BEAM_VERTICAL;
-unsigned int visible = 0;
 unsigned int click2 = 0;
+
+int collision_within_sprites(sprite_t spr1, sprite_t spr2) {
+    return (spr1.rel_x >= spr2.rel_x -10 && spr1.rel_x <= spr2.rel_x + 10 && spr1.rel_y >= spr2.rel_y -10 && spr1.rel_y <= spr2.rel_y + 10);
+}
 
 // Função da thread para leitura do mouse
 void* read_mouse(void* arg) {
@@ -72,6 +71,7 @@ int main() {
     int fd_gpu;
     sprite_t spr;
     sprite_t beam;
+    sprite_t enemy;
     color_t color = {0, 3, 0};
     color_t click = {0, 7, 0};
     unsigned int block;
@@ -79,8 +79,15 @@ int main() {
     color_t reset = {6, 7, 7};
     pthread_t mouse_thread;
 
+    enemy.address = 4;
+    enemy.rel_x = 200;
+    enemy.rel_y = 439;
+    enemy.variation = ENEMY_2;
+    enemy.visible = 1;
+
+
     beam.address = 3;
-    beam.rel_y = 439;
+    beam.rel_y = 0;
     beam.variation = BEAM_VERTICAL;
     beam.visible = 0;
 
@@ -124,13 +131,21 @@ int main() {
             beam.rel_y -= 1;
         }
         
+        if(collision_within_sprites(beam, enemy) == 1) {
+            printf("colidiu \n");
+            enemy.visible = 0;
+        }
+        
         pthread_mutex_unlock(&lock);
 
-        
-        printf("Auwq\n");
         setSpriteOnScreen(beam);
 
-
+        enemy.rel_y++;
+        if(enemy.rel_y > 479) {
+            enemy.rel_y = 0;
+        }
+        
+        setSpriteOnScreen(enemy);
 
         // Criar a estrutura do sprite com as novas coordenadas
         spr.address = 2;
@@ -140,8 +155,6 @@ int main() {
         spr.visible = 1;
 
         setSpriteOnScreen(spr);
-        printf("Antes do click\n");
-        // Verifica se o botão do mouse foi pressionado
         
     }
 
