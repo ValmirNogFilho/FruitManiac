@@ -95,12 +95,19 @@ int unmap_physicall(void * virtual_base, unsigned int span) {
 }
 
 
+
+
+// Define as cores
 void draw_apple() {
     int x, y;
     for (y = 0; y < 20; y++) {
         for (x = 0; x < 20; x++) {
-            int endereco = 10000 + y * 20 + x;
+            int endereco = 10000 - y * 20 + x;
             color_t cor;
+            cor.R = 0;
+            cor.G = 3;
+            cor.B = 0;
+
 
             // pixels da maçã
             if ((x - 10) * (x - 10) + (y - 10) * (y - 10) <= 36) {
@@ -122,60 +129,84 @@ void draw_apple() {
                 cor.G = 7;
                 cor.B = 0;
             }
+            // cor.R = 0;
+            // cor.G = 0;
+            // cor.B = 0;
             setPixelOnSpriteMemory(endereco, cor);
         }
     }
 }
 
-// void draw_orange(int offsetX, int offsetY) {
-//     int x, y;
-//     for (y = 0; y < 20; y++) {
-//         for (x = 0; x < 20; x++) {
-//             int endereco = 10400 + y * 20 + x;
-//             color_t cor = BACKGROUND_COLOR;
+/**
+#define BACKGROUND_COLOR {7, 7, 7}
+#define APPLE_COLOR {7, 0, 0}
+#define ORANGE_COLOR {7, 7, 0}
+#define PEAR_COLOR {0, 7, 0}
+#define STEM_COLOR {6, 3, 0}
+#define LEAF_COLOR {0, 7, 0}
 
-//             // pixels da laranja
-//             if ((x - 10) * (x - 10) + (y - 10) * (y - 10) <= 36) {
-//                 cor = ORANGE_COLOR;
-//             }
+*/
 
-//             // caule
-//             if ((x >= 9 && x <= 11) && (y >= 2 && y <= 6)) {
-//                 cor = STEM_COLOR;
-//             }
+void draw_orange() {
+    int x, y;
+    for (y = 0; y < 20; y++) {
+        for (x = 0; x < 20; x++) {
+            int endereco = 10400 + y * 20 + x;
+            color_t cor;
 
-//             setPixelOnSpriteMemory(endereco, cor);
-//         }
-//     }
-// }
+            // pixels da laranja
+            if ((x - 10) * (x - 10) + (y - 10) * (y - 10) <= 36) {
+                cor.R = 7;
+                cor.G = 7;
+                cor.B = 0;
+            }
 
-// void draw_pear(int offsetX, int offsetY) {
-//     int x, y;
-//     for (y = 0; y < 20; y++) {
-//         for (x = 0; x < 20; x++) {
-//             int endereco = 10800 + y * 20 + x;
-//             color_t cor = BACKGROUND_COLOR;
+            // caule
+            if ((x >= 9 && x <= 11) && (y >= 2 && y <= 6)) {
+                cor.R = 6;
+                cor.G = 3;
+                cor.B = 0;
+            }
 
-//             // pixels da pêra
-//             if ((x >= 7 && x <= 14) && (y >= 8 && y <= 16) &&
-//                 !(x >= 9 && x <= 12 && y >= 10 && y <= 14)) {
-//                 cor = PEAR_COLOR;
-//             }
+            setPixelOnSpriteMemory(endereco, cor);
+        }
+    }
+}
 
-//             // caule
-//             if ((x >= 10 && x <= 12) && (y >= 2 && y <= 6)) {
-//                 cor = STEM_COLOR;
-//             }
+void draw_pear() {
+    int x, y;
+    for (y = 0; y < 20; y++) {
+        for (x = 0; x < 20; x++) {
+            int endereco = 10800 + y * 20 + x;
+            color_t cor = {0, 3, 0};
 
-//             // folha
-//             if ((x >= 7 && x <= 9) && (y >= 1 && y <= 3)) {
-//                 cor = LEAF_COLOR;
-//             }
+            // pixels da pêra
+            if ((x >= 7 && x <= 14) && (y >= 8 && y <= 16) &&
+                !(x >= 9 && x <= 12 && y >= 10 && y <= 14)) {
+                cor.R = 0;
+                cor.G = 7;
+                cor.B = 0;
+            }
 
-//             setPixelOnSpriteMemory(endereco, cor);
-//         }
-//     }
-// }
+            // caule
+            if ((x >= 10 && x <= 12) && (y >= 2 && y <= 6)) {
+                cor.R = 6;
+                cor.G = 3;
+                cor.B = 0;
+            }
+
+            // folha
+            if ((x >= 7 && x <= 9) && (y >= 1 && y <= 3)) {
+                cor.R = 0;
+                cor.G = 7;
+                cor.B = 0;
+            }
+
+
+            setPixelOnSpriteMemory(endereco, cor);
+        }
+    }
+}
 
 
 
@@ -217,7 +248,7 @@ int tiros;
 unsigned int click2 = 0;
 
 int collision_between_sprites(sprite_t spr1, sprite_t spr2) {
-    return (spr1.rel_x >= spr2.rel_x -10 && spr1.rel_x <= spr2.rel_x + 10 && spr1.rel_y >= spr2.rel_y -10 && spr1.rel_y <= spr2.rel_y + 10 &&(spr1.visible==1 && spr2.visible==1));
+    return (spr1.rel_x >= (int) (spr2.rel_x -10) && spr1.rel_x <= spr2.rel_x + 10 && spr1.rel_y >= (int) (spr2.rel_y -10) && spr1.rel_y <= spr2.rel_y + 10 &&(spr1.visible==1 && spr2.visible==1));
 }
 
 // Função da thread para leitura do mouse
@@ -270,6 +301,7 @@ int main() {
     sprite_t spr;
     sprite_t beam;
 
+    int vidas=5;
 
     sprite_t enemy;
     sprite_t enemy1;
@@ -291,16 +323,6 @@ int main() {
 
     draw_apple();
 
-    sprite_t apple;
-    apple.address = 20;
-    apple.rel_x = 50;
-    apple.rel_y = 200;
-    apple.variation = 25;
-    apple.visible = 1;
-
-    setSpriteOnScreen(apple);
-
-
     enemy1.address =2;
     enemy1.rel_x = 0;
     enemy1.rel_y = 20;
@@ -313,22 +335,14 @@ int main() {
     enemy2.address =3;
     enemy2.rel_x = 0;
     enemy2.rel_y = 20;
-    enemy2.variation = ROCK;
+    enemy2.variation = 25;
     enemy2.visible = 0;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+    spr.address = 5;
+    spr.rel_y = 459;
+    spr.variation = ENEMY_1;
+    spr.visible = 1;
 
     beam.address = 4;
     beam.rel_y = 0;
@@ -417,9 +431,6 @@ int main() {
 
 
 
-    int numero1;
-    double fator1 = 200 / (RAND_MAX + 1.0);  // Calcula o fator de escala
-
 
 
 
@@ -432,17 +443,17 @@ int main() {
 
     srand(time(NULL));
     sprite_t lista1[3]={enemy,enemy1,enemy2};
-    int whileCounts[3] = {0}; 
     // Loop principal
-
+    int whileCounts[3] = {0};
     while (1) {
+
         int i;
         for(i=0;i<3;i++){
-            whileCounts[i]++;            
+            whileCounts[i]++;
             if(lista1[i].visible==0){
                 
                 
-                lista1[i].rel_x =(int)(rand() * fator);
+                lista1[i].rel_x = (int)(rand() * fator);
                 lista1[i].visible=1;    
                 
             }
@@ -450,14 +461,22 @@ int main() {
                 if(whileCounts[i] >= 5){
                     lista1[i].rel_y++;
                     whileCounts[i] = 0;
+
                 }
+
                 if(lista1[i].rel_y > 479) {
-                        lista1[i].rel_y = 0;
-                        lista1[i].rel_x =(int)(rand() * fator);
-                }                
+
+                    lista1[i].rel_y = 0;
+                    lista1[i].rel_x = (int)(rand() * fator);
+                }
             }
             setSpriteOnScreen(lista1[i]);   
         }
+
+        
+
+
+        
 
 
         // Atualiza as coordenadas acumuladas
@@ -481,31 +500,44 @@ int main() {
             beam.rel_y -= 1;
         }
         
-        int t;
-
-        for(t=0;t<3;t++){
-
+        int t, u;
+        for(t = 0; t<3; t++){
             if(collision_between_sprites(beam, lista1[t]) == 1) {
+                
             
-          
-            tiros++;
-            primeironum = tiros % 10;
-            segundonum= (tiros % 100) / 10;
-            terceironum = tiros / 100;  
+                tiros++;
+                primeironum = tiros % 10;
+                segundonum= (tiros % 100) / 10;
+                terceironum = tiros / 100;  
 
-            *DISPLAY_ptr = verificarNumero(primeironum);
-            *DISPLAY_ptrum=verificarNumero(segundonum);    
-            *DISPLAY_ptrdois=verificarNumero(terceironum);	
-            
-            printf("colidiu \n");
-            lista1[t].rel_y=0;
-            lista1[t].visible = 0;
-            beam.visible=0;
+                *DISPLAY_ptr = verificarNumero(primeironum);
+                *DISPLAY_ptrum=verificarNumero(segundonum);    
+                *DISPLAY_ptrdois=verificarNumero(terceironum);	
+                
+                printf("colidiu \n");
+                lista1[t].visible = 0;
+                lista1[t].rel_y = 0;
+                beam.visible=0;
+            }
 
-        }
+            if(collision_between_sprites(spr, lista1[t]) == 1) {
+                for(u = 0 ; u < 10; u++){
+                    spr.rel_y-= 2;
+                    setSpriteOnScreen(spr);
+                    usleep(5000);
+                }
+                for(u = 0 ; u < 10; u++){
+                    spr.rel_y+= 2;
+                    setSpriteOnScreen(spr);
+                    usleep(5000);
+                }
+                lista1[t].rel_y = 0;
+                lista1[t].visible = 0;
+                vidas--;
+            }
+
         }
         
-
         
         pthread_mutex_unlock(&lock);
 
@@ -513,17 +545,12 @@ int main() {
 
 
         // Criar a estrutura do sprite com as novas coordenadas
-        spr.address = 5;
         spr.rel_x = x;
-        spr.rel_y = 459;
-        spr.variation = ENEMY_1;
-        spr.visible = 1;
-
 
 
         setSpriteOnScreen(spr);
         // int i;
-        // for(i=0;i<10;i++){
+        // for(i=1;i<32;i++){
         //     enemy.address=i;
         //     enemy.visible=0;
         //     setSpriteOnScreen(enemy);
