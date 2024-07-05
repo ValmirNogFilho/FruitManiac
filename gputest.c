@@ -51,6 +51,131 @@ struct input_event ev;
 
 
 
+int i, j;
+color_t green = {0,7,0};
+color_t red = {7, 0, 0};
+color_t white = {7,7,7};
+color_t brown = {6,3,0};
+color_t bg = {6, 7, 7};
+
+// void ladrao(){
+    //-----------------------------------------------------------------------------------------------------------------------//   
+//LADRÃO PADRÃO
+
+// int x, y;
+// color_t cor;
+// for (y = 0; y < 21; y++) {
+//     for (x = 0; x < 20; x++) {
+//         int endereco = 10000 + y * 20 + x;
+//         int azul = 7, verde = 7, vermelho = 6; // Cor padrão (transparente)
+
+//         //Condições para preto
+//         if (
+//             ((x == 5 || x == 15) && (y >= 8 && y <= 11)) ||
+
+//             ((x == 6 || x == 14 ) && ((y >= 3 && y <= 5) || (y >= 7 && y <= 11))) ||
+
+//             (x == 7 && ((y >= 2 && y <= 9) || (y >= 12 && y <= 18))) ||
+
+//             (x == 8 && ((y >= 1 && y <= 2) || (y >= 5 && y <= 8) || (y >= 12 && y <= 18))) ||
+
+//             (x == 9 && ((y >= 1 && y <= 3) || (y >= 5 && y <= 7) || (y >= 12 && y <= 18))) ||
+
+//             (x == 10 && ((y >= 1 && y <= 2) || (y >= 5 && y <= 6) || (y >= 11 && y <= 13))) ||
+
+//             (x == 11 && ((y >= 1 && y <= 3) || (y >= 5 && y <= 6) || (y >= 10 && y <= 18))) ||
+
+//             (x == 12 && ((y >= 1 && y <= 2) || (y >= 5 && y <= 6) || (y >= 9 && y <= 18))) ||
+
+//             (x == 13 && ((y >= 2 && y <= 6) || (y >= 8 && y <= 18)))
+//         ) {
+//             vermelho = 0;
+//             verde = 0;
+//             azul = 0;
+//         }
+
+//         //Condições para marrom
+//         else if (
+//             (x == 7 && (y >= 10 && y <= 11)) ||
+
+//             (x == 8 && (y >= 9 && y <= 11)) ||
+
+//             (x == 9 && (y >= 8 && y <= 11)) ||
+
+//             (x == 10 && (y >= 7 && y <= 10)) ||
+
+//             (x == 11 && (y >= 7 && y <= 9)) ||
+
+//             (x == 12 && (y >= 7 && y <= 8)) ||
+
+//             (x == 13 && y == 7)
+//         ) {
+//             vermelho = 4;
+//             verde = 2;
+//             azul = 2;
+//         }
+
+//         //Condições para rosa cor de pele
+//         else if (
+//             ((x == 8 || x == 12 || x == 10) && (y >= 3 && y <= 4)) ||
+//             ((x == 9 || x == 11) && y == 4) ||
+//             ((x == 5 || x == 6 || x == 14 || x == 15)  && y == 12)
+//         ) {
+//             vermelho = 7;
+//             verde = 6;
+//             azul = 5;
+//         }
+
+//         if (y == 0 || y == 20) {
+//             azul = 7; 
+//             verde = 7; 
+//             vermelho = 6;
+//         }
+
+//         cor.R = vermelho;
+//         cor.G = verde;
+//         cor.B = azul;
+//         setPixelOnSpriteMemory(endereco, cor);
+//     }
+
+// }
+// }
+
+void draw_apple(){
+    int x, y;
+
+    // for(x = 0; x< 20; x++)
+    //     for(y = 0; y< 20; y++)
+    //         setPixelOnSpriteMemory(10000+ y*20+x, bg);
+
+
+    for (y = 0; y < 21; y++) {
+        for (x = 0; x < 20; x++) {
+            int endereco = 10000 + y*20 +x;
+            color_t cor = {6, 7, 7};
+
+            // Corpo da maçã
+            if ((x >= 6 && x <= 13 && y >= 7 && y <= 13) ||
+                ((x == 5 || x == 14) && (y >= 8 && y <= 12)) ||
+                ((x == 4 || x == 15) && (y >= 9 && y <= 11))) {
+                setPixelOnSpriteMemory(endereco, red);
+            }
+
+            // Talo da maçã
+            if ((x == 9 || x == 10) && y == 6) {
+                setPixelOnSpriteMemory(endereco, red);
+            }
+
+            // Folha da maçã
+            if ((x == 8 && y == 5) || (x == 11 && y == 5)) {
+    
+                setPixelOnSpriteMemory(endereco, green);
+            }
+
+        }
+    }
+}
+
 
 int open_physicall (int fd) {
     if (fd == -1)
@@ -98,44 +223,44 @@ int unmap_physicall(void * virtual_base, unsigned int span) {
 
 
 // Define as cores
-void draw_apple() {
-    int x, y;
-    for (y = 0; y < 20; y++) {
-        for (x = 0; x < 20; x++) {
-            int endereco = 10000 - y * 20 + x;
-            color_t cor;
-            cor.R = 0;
-            cor.G = 3;
-            cor.B = 0;
+// void draw_apple() {
+//     int x, y;
+//     for (y = 0; y < 20; y++) {
+//         for (x = 0; x < 20; x++) {
+//             int endereco = 10000 + y * 20 + x;
+//             color_t cor;
+//             cor.R = 6;
+//             cor.G = 7;
+//             cor.B = 7;
 
 
-            // pixels da maçã
-            if ((x - 10) * (x - 10) + (y - 10) * (y - 10) <= 36) {
-                cor.R = 7;
-                cor.G = 0;
-                cor.B = 0;
-            }
+//             // pixels da maçã
+//             if ((x - 10) * (x - 10) + (y - 10) * (y - 10) <= 36) {
+//                 cor.R = 7;
+//                 cor.G = 0;
+//                 cor.B = 0;
+//             }
 
-            // caule
-            if ((x >= 9 && x <= 11) && (y >= 2 && y <= 6)) {
-                cor.R = 6;
-                cor.G = 3;
-                cor.B = 0;
-            }
+//             // caule
+//             if ((x >= 9 && x <= 11) && (y >= 2 && y <= 6)) {
+//                 cor.R = 6;
+//                 cor.G = 3;
+//                 cor.B = 0;
+//             }
 
-            // folha
-            if ((x >= 5 && x <= 7) && (y >= 2 && y <= 4)) {
-                cor.R = 0;
-                cor.G = 7;
-                cor.B = 0;
-            }
-            // cor.R = 0;
-            // cor.G = 0;
-            // cor.B = 0;
-            setPixelOnSpriteMemory(endereco, cor);
-        }
-    }
-}
+//             // folha
+//             if ((x >= 5 && x <= 7) && (y >= 2 && y <= 4)) {
+//                 cor.R = 0;
+//                 cor.G = 7;
+//                 cor.B = 0;
+//             }
+//             // cor.R = 0;
+//             // cor.G = 0;
+//             // cor.B = 0;
+//             setPixelOnSpriteMemory(endereco, cor);
+//         }
+//     }
+// }
 
 /**
 #define BACKGROUND_COLOR {7, 7, 7}
@@ -152,23 +277,50 @@ void draw_orange() {
     for (y = 0; y < 20; y++) {
         for (x = 0; x < 20; x++) {
             int endereco = 10400 + y * 20 + x;
-            color_t cor;
+            // color_t cor = {6,7,7};
 
             // pixels da laranja
             if ((x - 10) * (x - 10) + (y - 10) * (y - 10) <= 36) {
-                cor.R = 7;
-                cor.G = 7;
-                cor.B = 0;
+                color_t cor1 = {7,0,0};
+            
+                setPixelOnSpriteMemory(endereco, cor1);
             }
 
             // caule
             if ((x >= 9 && x <= 11) && (y >= 2 && y <= 6)) {
-                cor.R = 6;
-                cor.G = 3;
-                cor.B = 0;
+              
+                color_t cor2 = {6,3,0};
+                setPixelOnSpriteMemory(endereco, cor2);
             }
 
-            setPixelOnSpriteMemory(endereco, cor);
+            // setPixelOnSpriteMemory(endereco, cor);
+        }
+    }
+}
+
+
+
+
+void draw_x() {
+    int x, y;
+    for (y = 0; y < 20; y++) {
+        for (x = 0; x < 20; x++) {
+            int endereco = 10000 + y * 20 + x;
+            color_t cor = {0,7,0};
+
+
+            // pixels da laranja
+            if (y==x) {
+                setPixelOnSpriteMemory(endereco, cor);
+
+            }
+
+            // caule
+            if (y==20 - 1-x) {
+                setPixelOnSpriteMemory(endereco, cor);
+            }
+
+            // setPixelOnSpriteMemory(endereco, cor);
         }
     }
 }
@@ -178,7 +330,7 @@ void draw_pear() {
     for (y = 0; y < 20; y++) {
         for (x = 0; x < 20; x++) {
             int endereco = 10800 + y * 20 + x;
-            color_t cor = {0, 3, 0};
+            color_t cor = {6, 7, 7};
 
             // pixels da pêra
             if ((x >= 7 && x <= 14) && (y >= 8 && y <= 16) &&
@@ -186,6 +338,7 @@ void draw_pear() {
                 cor.R = 0;
                 cor.G = 7;
                 cor.B = 0;
+                setPixelOnSpriteMemory(endereco, cor);
             }
 
             // caule
@@ -193,6 +346,7 @@ void draw_pear() {
                 cor.R = 6;
                 cor.G = 3;
                 cor.B = 0;
+                setPixelOnSpriteMemory(endereco, cor);
             }
 
             // folha
@@ -200,10 +354,11 @@ void draw_pear() {
                 cor.R = 0;
                 cor.G = 7;
                 cor.B = 0;
+                setPixelOnSpriteMemory(endereco, cor);
             }
 
 
-            setPixelOnSpriteMemory(endereco, cor);
+            // setPixelOnSpriteMemory(endereco, cor);
         }
     }
 }
@@ -315,18 +470,22 @@ int main() {
     color_t reset = {6, 7, 7};
     pthread_t mouse_thread;
 
+    //draw_x();
+    //draw_apple();
+     draw_orange();
+     draw_pear();
+    
+    
     enemy.address = 8;
     enemy.rel_x = 0;
     enemy.rel_y = 20;
-    enemy.variation = DIAMOND;
+    enemy.variation = 26;
     enemy.visible = 0;
-
-    draw_apple();
 
     enemy1.address =2;
     enemy1.rel_x = 0;
     enemy1.rel_y = 20;
-    enemy1.variation = BOMB;
+    enemy1.variation = 25;
     enemy1.visible = 0;
 
 
@@ -335,7 +494,7 @@ int main() {
     enemy2.address =3;
     enemy2.rel_x = 0;
     enemy2.rel_y = 20;
-    enemy2.variation = 25;
+    enemy2.variation = 27;
     enemy2.visible = 0;
 
 
