@@ -37,7 +37,6 @@ static struct drvgpu_data{
 
 int
 deviceOpen(struct inode *inode,struct file *filp){ 
-        printk(KERN_INFO "aberto");
         return 0;
 }
 
@@ -51,12 +50,10 @@ ssize_t
 deviceWrite(struct file* filp, const unsigned char *bufSourceData, size_t bufCount, loff_t* curOffset){
     int ret;
     unsigned int concat, concat1;
-    printk(KERN_INFO "escrevendo");
 
     //copia do espaço do usário para o buffer do driver
     ret = copy_from_user(data, bufSourceData, bufCount);//primeiro parametro é o buffer do driver, segundo é o buffer do lado do usário e o terceiro o tamanho do buffer(usuario)
     if (ret != 0) {
-        printk(KERN_ERR "Falhou na cópia de dados do espaço do usuário\n");
         return -EFAULT; 
     }
 
@@ -92,10 +89,8 @@ deviceRead(struct file* filp,char *bufDestination, size_t bufCount, loff_t* curO
         int ret;
         ret=copy_to_user(bufDestination,data + *curOffset,bufCount); //copiando os dados escritos no kernel para o espaço do usário 
         if (ret != 0) {
-                printk(KERN_ERR "Falhou na coía de dados para o espaco de usuario\n");
                 return -EFAULT; // 
         }
-        printk(KERN_INFO "lendo");
         return bufCount;
 }
 
@@ -182,5 +177,4 @@ exit_kernelgpudriver(void) {
 
 module_init(init_kernelgpudriver);
 module_exit(exit_kernelgpudriver);
-
 
