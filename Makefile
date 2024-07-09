@@ -11,7 +11,7 @@ run: gputest
 	sudo ./gputest
 
 program: gputest.o instructions.o gpulib.o
-	gcc -o gputest gputest.o gpulib.o instructions.o
+	gcc -o gputest gputest.o gpulib.o instructions.o -pthread
 	rm -f gpulib.o instructions.o
 
 instructions.o: lib/instructions.c
