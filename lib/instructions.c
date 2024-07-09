@@ -13,11 +13,12 @@
 //as seguintes funções retornam um ponteiro para a primeisa posição de um vetor de 8 char's,
 //que são organizados no kernel de modo a gerar separadamente as strings para serem enviadas ao DATA_A e ao DATA_B da GPU
 
-unsigned char*
+// unsigned char*
+void
 assembleInstructionWBR(
-    unsigned char R, unsigned char G, unsigned char B) {
+    unsigned char R, unsigned char G, unsigned char B, unsigned char word[]) {
 
-    static unsigned char word[8] = {0};
+    // static unsigned char word[8] = {0};
 
 
     //no primeiro byte, 4 bits menos significativos do byte que terá o opcode
@@ -51,7 +52,7 @@ assembleInstructionWBR(
     /* o sexto byte vai pegar somente o terceiro bit do azul */
     word[5] |= (B & 0x04) >> 2;  //word[5] = 00000001
    
-    return word;
+    // return word;
 }
 
 unsigned char*
@@ -132,12 +133,13 @@ assembleInstructionWBM(
 }
 
 
-unsigned char*
+// unsigned char*
+void
 assembleInstructionWSM(
-		unsigned int address, unsigned char R, unsigned char G, unsigned char B){
+		unsigned int address, unsigned char R, unsigned char G, unsigned char B, unsigned char word[]){
 
 
-    static unsigned char word[8] = {0};
+    // static unsigned char word[8] = {0};
 
 
     //no primeiro byte, 4 bits menos significativos do byte que terá o opcode
@@ -164,7 +166,7 @@ assembleInstructionWSM(
     //bit mais significativo do pigmento de cor B
     word[5] |= (B & 0x04) >> 2;  
    
-    return word;
+    // return word;
 }
 
 unsigned char*

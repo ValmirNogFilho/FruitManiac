@@ -52,16 +52,30 @@ writeBitsOnDeviceDriver(unsigned char* bits, char* error_msg){
 
 int
 setBackground(color_t color) {
-    char* word = assembleInstructionWBR(color.R, color.G, color.B);
+    unsigned char word[8] = {0}; 
+    assembleInstructionWBR(color.R, color.G, color.B, word);
     return writeBitsOnDeviceDriver(word, "erro na escrita do background");
-   
+
 }
 
 int
 setPixelOnSpriteMemory(unsigned int mem_address, color_t color) {
-    char* word = assembleInstructionWSM(mem_address, color.R, color.G, color.B);
+    unsigned char word[8] = {0};
+    assembleInstructionWSM(mem_address, color.R, color.G, color.B, word);
     return writeBitsOnDeviceDriver(word, "erro na edição de pixel na memória de sprites");
+
 }
+
+
+// int
+// setPixelOnSpriteMemory(unsigned int mem_address, color_t color) {
+//     char* word = assembleInstructionWSM(mem_address, color.R, color.G, color.B);
+//     return writeBitsOnDeviceDriver(word, "erro na edição de pixel na memória de sprites");
+// }
+
+
+
+
 
 int
 editBlockOnBackgroundMemory(unsigned int block, color_t color) {
