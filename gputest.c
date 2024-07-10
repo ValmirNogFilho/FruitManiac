@@ -20,6 +20,8 @@ int fd_mouse;
 pthread_mutex_t lock;
 struct input_event ev;
 
+sprite_t beam = {4, BEAM_VERTICAL, 0, 0, 0};
+
 #define LW_BRIDGE_BASE         0xFF200000
 #define LW_BRIDGE_SPAN         0x00005000
 
@@ -56,90 +58,8 @@ color_t white = {7,7,7};
 color_t brown = {6,3,0};
 color_t bg = {6, 7, 7};
 
-// void ladrao(){
-    //-----------------------------------------------------------------------------------------------------------------------//   
-//LADRÃO PADRÃO
 
-// int x, y;
-// color_t cor;
-// for (y = 0; y < 21; y++) {
-//     for (x = 0; x < 20; x++) {
-//         int endereco = 10000 + y * 20 + x;
-//         int azul = 7, verde = 7, vermelho = 6; // Cor padrão (transparente)
-
-//         //Condições para preto
-//         if (
-//             ((x == 5 || x == 15) && (y >= 8 && y <= 11)) ||
-
-//             ((x == 6 || x == 14 ) && ((y >= 3 && y <= 5) || (y >= 7 && y <= 11))) ||
-
-//             (x == 7 && ((y >= 2 && y <= 9) || (y >= 12 && y <= 18))) ||
-
-//             (x == 8 && ((y >= 1 && y <= 2) || (y >= 5 && y <= 8) || (y >= 12 && y <= 18))) ||
-
-//             (x == 9 && ((y >= 1 && y <= 3) || (y >= 5 && y <= 7) || (y >= 12 && y <= 18))) ||
-
-//             (x == 10 && ((y >= 1 && y <= 2) || (y >= 5 && y <= 6) || (y >= 11 && y <= 13))) ||
-
-//             (x == 11 && ((y >= 1 && y <= 3) || (y >= 5 && y <= 6) || (y >= 10 && y <= 18))) ||
-
-//             (x == 12 && ((y >= 1 && y <= 2) || (y >= 5 && y <= 6) || (y >= 9 && y <= 18))) ||
-
-//             (x == 13 && ((y >= 2 && y <= 6) || (y >= 8 && y <= 18)))
-//         ) {
-//             vermelho = 0;
-//             verde = 0;
-//             azul = 0;
-//         }
-
-//         //Condições para marrom
-//         else if (
-//             (x == 7 && (y >= 10 && y <= 11)) ||
-
-//             (x == 8 && (y >= 9 && y <= 11)) ||
-
-//             (x == 9 && (y >= 8 && y <= 11)) ||
-
-//             (x == 10 && (y >= 7 && y <= 10)) ||
-
-//             (x == 11 && (y >= 7 && y <= 9)) ||
-
-//             (x == 12 && (y >= 7 && y <= 8)) ||
-
-//             (x == 13 && y == 7)
-//         ) {
-//             vermelho = 4;
-//             verde = 2;
-//             azul = 2;
-//         }
-
-//         //Condições para rosa cor de pele
-//         else if (
-//             ((x == 8 || x == 12 || x == 10) && (y >= 3 && y <= 4)) ||
-//             ((x == 9 || x == 11) && y == 4) ||
-//             ((x == 5 || x == 6 || x == 14 || x == 15)  && y == 12)
-//         ) {
-//             vermelho = 7;
-//             verde = 6;
-//             azul = 5;
-//         }
-
-//         if (y == 0 || y == 20) {
-//             azul = 7; 
-//             verde = 7; 
-//             vermelho = 6;
-//         }
-
-//         cor.R = vermelho;
-//         cor.G = verde;
-//         cor.B = azul;
-//         setPixelOnSpriteMemory(endereco, cor);
-//     }
-
-// }
-// }
-
-void draw_apple(){
+void draw(unsigned char* path, int initial_address){
     int x, y, endereco;
     color_t cor = {6, 7, 7};
     color_t blue = {0,0,7};
@@ -151,16 +71,16 @@ void draw_apple(){
     int address;
     color_t color;
     // Abra o arquivo em modo leitura
-    file = fopen("sprites/apple.sprite", "r");
+    file = fopen(path, "r");
     if (file == NULL) {
         printf("Erro ao abrir o arquivo.\n");
-        return 1;
+        return;
     }
 
     // Leia cada linha e separe os valores
     for(i = 0; i < 20; i++) {
         for(j = 0; j < 20; j++) {
-            address = 10000 + 20 * j + i;
+            address = initial_address + 20 * j + i;
             if(fscanf(file, "%d %d %d", &r, &g, &b) != EOF) {
                 color.R = r;
                 color.G = g;
@@ -173,9 +93,26 @@ void draw_apple(){
 
     fclose(file);
 
-    return 0;
+    return;
 
 }
+
+void draw_apple() {
+    draw("sprites/apple.sprite", 10000);
+}
+
+void draw_orange() {
+    draw("sprites/orange.sprite", 10400);
+}
+
+void draw_pear() {
+    color_t transparent = {6, 7, 7};
+    draw("sprites/pear.sprite", 10800);
+    for(j = 0; j < 20; j++) {
+            setPixelOnSpriteMemory(11200+j, transparent);
+    }
+}
+
 
 int open_physicall (int fd) {
     if (fd == -1)
@@ -220,129 +157,6 @@ int unmap_physicall(void * virtual_base, unsigned int span) {
 }
 
 
-
-
-// Define as cores
-// void draw_apple() {
-//     int x, y;
-//     for (y = 0; y < 20; y++) {
-//         for (x = 0; x < 20; x++) {
-//             int endereco = 10000 + y * 20 + x;
-//             color_t cor;
-//             cor.R = 6;
-//             cor.G = 7;
-//             cor.B = 7;
-
-
-//             // pixels da maçã
-//             if ((x - 10) * (x - 10) + (y - 10) * (y - 10) <= 36) {
-//                 cor.R = 7;
-//                 cor.G = 0;
-//                 cor.B = 0;
-//             }
-
-//             // caule
-//             if ((x >= 9 && x <= 11) && (y >= 2 && y <= 6)) {
-//                 cor.R = 6;
-//                 cor.G = 3;
-//                 cor.B = 0;
-//             }
-
-//             // folha
-//             if ((x >= 5 && x <= 7) && (y >= 2 && y <= 4)) {
-//                 cor.R = 0;
-//                 cor.G = 7;
-//                 cor.B = 0;
-//             }
-//             // cor.R = 0;
-//             // cor.G = 0;
-//             // cor.B = 0;
-//             setPixelOnSpriteMemory(endereco, cor);
-//         }
-//     }
-// }
-
-/**
-#define BACKGROUND_COLOR {7, 7, 7}
-#define APPLE_COLOR {7, 0, 0}
-#define ORANGE_COLOR {7, 7, 0}
-#define PEAR_COLOR {0, 7, 0}
-#define STEM_COLOR {6, 3, 0}
-#define LEAF_COLOR {0, 7, 0}
-
-*/
-
-void draw_orange() {
-    int x, y;
-    color_t cor = {6,7,7};
-    int endereco;
-    for (x = 0; x < 20; x++) {
-        for (y = 0; y < 21; y++) {
-            endereco = 10400 + y * 20 + x;
-
-            // pixels da laranja
-            if ((x - 10) * (x - 10) + (y - 10) * (y - 10) <= 36) {
-                cor.R = 6;
-                cor.G = 3;
-                cor.B = 1;
-            }
-
-            // caule
-            if ((x >= 9 && x <= 11) && (y >= 2 && y <= 6)) {
-                cor.R = 0;
-                cor.G = 0;
-                cor.B = 0;
-            }
-
-            setPixelOnSpriteMemory(endereco, cor);
-        }
-    }
-}
-
-
-void draw_pear() {
-    int x, y;
-    int endereco;
-    color_t cor = {6, 7, 7};
-
-    for (x = 0; x < 20; x++) {
-        for (y = 0; y < 21; y++) {
-            endereco = 10800 + y * 20 + x;
-
-            // pixels da pêra
-            if ((x >= 7 && x <= 14) && (y >= 8 && y <= 16) &&
-                !(x >= 9 && x <= 12 && y >= 10 && y <= 14)) {
-                cor.R = 0;
-                cor.G = 7;
-                cor.B = 0;
-                setPixelOnSpriteMemory(endereco, cor);
-            }
-
-            // caule
-            if ((x >= 10 && x <= 12) && (y >= 2 && y <= 6)) {
-                cor.R = 6;
-                cor.G = 3;
-                cor.B = 0;
-                setPixelOnSpriteMemory(endereco, cor);
-            }
-
-            // folha
-            if ((x >= 7 && x <= 9) && (y >= 1 && y <= 3)) {
-                cor.R = 0;
-                cor.G = 7;
-                cor.B = 0;
-                setPixelOnSpriteMemory(endereco, cor);
-            }
-
-
-            setPixelOnSpriteMemory(endereco, cor);
-        }
-    }
-}
-
-
-
-
 int verificarNumero(int numero) {
     switch (numero) {
         case 9:
@@ -377,9 +191,11 @@ int tiros;
 
 
 
-unsigned int click2 = 0;
+unsigned int click_reset = 0;
 
 int collision_between_sprites(sprite_t spr1, sprite_t spr2) {
+    if (spr1.rel_x < 10 && spr2.rel_x < 10)
+        return (spr1.rel_x <= spr2.rel_x + 10 && spr1.rel_y >= (int) (spr2.rel_y -10) && spr1.rel_y <= spr2.rel_y + 10 &&(spr1.visible==1 && spr2.visible==1));
     return (spr1.rel_x >= (int) (spr2.rel_x -10) && spr1.rel_x <= spr2.rel_x + 10 && spr1.rel_y >= (int) (spr2.rel_y -10) && spr1.rel_y <= spr2.rel_y + 10 &&(spr1.visible==1 && spr2.visible==1));
 }
 
@@ -413,8 +229,8 @@ void* read_mouse(void* arg) {
         // Limitar as coordenadas acumuladas para evitar overflow
         if (xsoma < 0) xsoma = 0;
         if (xsoma > 619) xsoma = 619;
-        if (ev.type == EV_KEY && ev.code == BTN_LEFT && ev.value == 1) {
-            click2 = ev.value;
+        if (ev.type == EV_KEY && ev.code == BTN_LEFT && ev.value == 1 && beam.rel_y == 0) {
+            click_reset = ev.value;
             
         
         }
@@ -427,11 +243,26 @@ void* read_mouse(void* arg) {
     return NULL;
 }
 
+
+// beam.address = 4;
+// beam.rel_y = 0;
+// beam.variation = BEAM_VERTICAL;
+// beam.visible = 0;
+
+
+void setup() {
+
+}
+
 int main() {
     int x, y;
     int fd_gpu;
     sprite_t spr;
-    sprite_t beam;
+
+    // Inicializa o gerador de números aleatórios
+    srand(time(NULL));
+
+    setup();
 
     int vidas=5;
 
@@ -447,10 +278,9 @@ int main() {
     color_t reset = {6, 7, 7};
     pthread_t mouse_thread;
 
-    //draw_x();
     draw_apple();
-    draw_pear();
     draw_orange();
+    draw_pear();
     
 
     fruit.address = 9;
@@ -518,10 +348,6 @@ int main() {
     spr.variation = ENEMY_1;
     spr.visible = 1;
 
-    beam.address = 4;
-    beam.rel_y = 0;
-    beam.variation = BEAM_VERTICAL;
-    beam.visible = 0;
 
     setBackground(color);
 
@@ -573,6 +399,7 @@ int main() {
    
    DISPLAY_ptrquinto = (unsigned int *) (LW_virtual + HEX5_BASE);
 
+   chave = (unsigned int *) (LW_virtual + KEYS_BASE);
 
 
     // Inicializar o mutex
@@ -598,8 +425,6 @@ int main() {
     int numero;
     double fator = 620.0 / (RAND_MAX + 1.0);  // Calcula o fator de escala
 
-    // Inicializa o gerador de números aleatórios
-    srand(time(NULL));
 
     // Gera um número aleatório entre 0 e 619
 
@@ -609,15 +434,17 @@ int main() {
 
 
 
-    srand(time(NULL));
     sprite_t lista1[9]={enemy,enemy1,enemy2, fruit, fruit1, fruit2, fruit3, fruit4, fruit5};
+    sprite_variation_t skins[4] = {BOMB, 25, 26, 27};
 
     // Loop principal
-    int whileCounts[9] = {0};
+    int whileCounts[10] = {0};
+
+    int number_of_elements = 1;
     while (1) {
 
         int i;
-        for(i=0;i<9;i++){
+        for(i=0;i<number_of_elements;i++){
             whileCounts[i]++;
             if(lista1[i].visible==0){
                 
@@ -627,10 +454,9 @@ int main() {
                 
             }
             else {
-                if(whileCounts[i] >= 15){
+                if(whileCounts[i] >= 30){
                     lista1[i].rel_y++;
                     whileCounts[i] = 0;
-
                 }
 
                 if(lista1[i].rel_y > 479) {
@@ -639,7 +465,7 @@ int main() {
                     lista1[i].rel_x = (int)(rand() * fator);
                     vidas--;
                     setBackground(red);
-                    usleep(100000);
+                    usleep(10000);
                     *DISPLAY_ptrtres=verificarNumero(vidas);    	
                     setBackground(color);
                 }
@@ -657,27 +483,32 @@ int main() {
         
         x = xsoma;
         y = ysoma;
-        if(click2 == 1){
+        if(click_reset == 1 && beam.rel_y == 0){
             beam.visible = 1;
             beam.rel_y = 439;
             beam.rel_x = xsoma;
-            click2=0;
-
-
-            
+            click_reset=0;
         }
         
-        if (beam.rel_y >= 11 && beam.visible == 1) {
-            beam.rel_y -= 1;
+        whileCounts[9]++;
+        if (beam.rel_y > 0 && beam.visible == 1) {
+            if (whileCounts[9] >= 15) {
+                beam.rel_y -= 1;
+                whileCounts[9] = 0;
+            }
+        }
+
+        if(beam.rel_y == 0){
+            beam.visible = 0;
         }
         
         int t, u;
-        for(t = 0; t<9; t++){
+        for(t = 0; t<number_of_elements; t++){
             if(collision_between_sprites(beam, lista1[t]) == 1) {
                 if(lista1[t].variation != BOMB)
                 {
                     setBackground(red);
-                    usleep(100000);
+                    usleep(10000);
                     setBackground(color);
                     vidas--;
                     *DISPLAY_ptrtres=verificarNumero(vidas);
@@ -695,14 +526,16 @@ int main() {
                 printf("colidiu \n");
                 lista1[t].visible = 0;
                 lista1[t].rel_y = 0;
+                lista1[t].variation = skins[rand() % 4];
                 beam.visible=0;
+                beam.rel_y = 0;
             }
 
             if(collision_between_sprites(spr, lista1[t]) == 1) {
                 if(lista1[t].variation == BOMB)
                 {
                     setBackground(red);
-                    usleep(100000);
+                    usleep(10000);
                     setBackground(color);
                     vidas--;
                     *DISPLAY_ptrtres=verificarNumero(vidas);
@@ -721,6 +554,8 @@ int main() {
                 }
                 lista1[t].rel_y = 0;
                 lista1[t].visible = 0;
+                lista1[t].variation = skins[rand() % 4];
+                beam.rel_y = 0;
                 
             }
 
