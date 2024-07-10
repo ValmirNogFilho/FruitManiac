@@ -79,20 +79,23 @@ setPixelOnSpriteMemory(unsigned int mem_address, color_t color) {
 
 int
 editBlockOnBackgroundMemory(unsigned int block, color_t color) {
-    unsigned char* word = assembleInstructionWBM(block, color.R, color.G, color.B);
+    unsigned char word[8] = {0};
+    assembleInstructionWBM(block, color.R, color.G, color.B, word);
     return writeBitsOnDeviceDriver(word, "erro na edição de bloco na memória de background");
 }
 
 int
 setSpriteOnScreen(sprite_t sprite) {
-    unsigned char* word = assembleInstructionWBR_2(sprite.address, sprite.variation, sprite.rel_y, sprite.rel_x, sprite.visible);
+    unsigned char word[8] = {0};
+    assembleInstructionWBR_2(sprite.address, sprite.variation, sprite.rel_y, sprite.rel_x, sprite.visible, word);
     return writeBitsOnDeviceDriver(word, "erro na escrita de sprite");
 }
 
 int
 setPolygon(polygon_t polygon) {
-    unsigned char* word = assembleInstructionDP(polygon.rel_x, polygon.rel_y, polygon.address,
-    polygon.size, polygon.color.R, polygon.color.G, polygon.color.B, polygon.shape);
+    unsigned char word[8] = {0};
+    assembleInstructionDP(polygon.rel_x, polygon.rel_y, polygon.address,
+    polygon.size, polygon.color.R, polygon.color.G, polygon.color.B, polygon.shape, word);
     return writeBitsOnDeviceDriver(word, "erro na escrita de polígono");
 }
 

@@ -18,8 +18,6 @@ void
 assembleInstructionWBR(
     unsigned char R, unsigned char G, unsigned char B, unsigned char word[]) {
 
-    // static unsigned char word[8] = {0};
-
 
     //no primeiro byte, 4 bits menos significativos do byte que terá o opcode
     word[0] = (WBR_OPCODE & 0xF);
@@ -51,17 +49,12 @@ assembleInstructionWBR(
 
     /* o sexto byte vai pegar somente o terceiro bit do azul */
     word[5] |= (B & 0x04) >> 2;  //word[5] = 00000001
-   
-    // return word;
 }
 
-unsigned char*
+void
 assembleInstructionWBR_2(
-		unsigned char reg, unsigned int offset, unsigned int Coord_y, unsigned int Coord_x, unsigned char sp) {
+		unsigned char reg, unsigned int offset, unsigned int Coord_y, unsigned int Coord_x, unsigned char sp, unsigned char word[]) {
     // atenção para os unsigned int, visto que unsigned chars não suportariam os 10 bits de Coord_x e Coord_y
-
-   static unsigned char word[8] = {0};
-
 
     //no primeiro byte, os 4 bits menos significativos do byte que terá o opcode
     word[0] = (WBR_OPCODE & 0xF);
@@ -92,17 +85,12 @@ assembleInstructionWBR_2(
 
     //bit de visibilidade do sprite
     word[7] |= (sp & 0x1) << 5;
-   
-    return word;
 }
 
 
-unsigned char*
+void
 assembleInstructionWBM(
-    unsigned int address, unsigned char R, unsigned char G, unsigned char B){
-
-
-    static unsigned char word[8] = {0};
+    unsigned int address, unsigned char R, unsigned char G, unsigned char B, unsigned char word[]){
 
 
     //no primeiro byte, os 4 bits menos significativos do byte que terá o opcode
@@ -129,7 +117,6 @@ assembleInstructionWBM(
     //bit mais significativo do pigmento de cor B
     word[5] |= (B & 0x04) >> 2;  
    
-    return word;
 }
 
 
@@ -137,7 +124,6 @@ assembleInstructionWBM(
 void
 assembleInstructionWSM(
 		unsigned int address, unsigned char R, unsigned char G, unsigned char B, unsigned char word[]){
-
 
     // static unsigned char word[8] = {0};
 
@@ -166,14 +152,12 @@ assembleInstructionWSM(
     //bit mais significativo do pigmento de cor B
     word[5] |= (B & 0x04) >> 2;  
    
-    // return word;
 }
 
-unsigned char*
+void
 assembleInstructionDP (
 		unsigned int ref_point_X, unsigned int ref_point_Y, unsigned char address,
-    unsigned char size, unsigned char R, unsigned char G, unsigned char B, unsigned char shape) {
-    static char word[8] = {0};
+    unsigned char size, unsigned char R, unsigned char G, unsigned char B, unsigned char shape, unsigned char word[]) {
 	
     //no primeiro byte, 4 bits menos significativos do byte que terá o opcode
     word[0] = DP_OPCODE;
@@ -210,6 +194,4 @@ assembleInstructionDP (
 
     //bit do formato do polígono (quadrado ou triângulo)
     word[7] |= (shape) << 7;
-
-   return word;
 }
