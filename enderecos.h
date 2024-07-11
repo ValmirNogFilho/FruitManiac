@@ -4,3 +4,4 @@
 #define HEX3_BASE 0x30
 #define HEX4_BASE 0x20
 #define HEX5_BASE 0x10
+#define KEYS_BASE 0x0
