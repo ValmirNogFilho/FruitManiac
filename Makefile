@@ -1,11 +1,23 @@
+# Variáveis
 obj-m += kernelgpudriver.o
+MODULE_NAME := gpu123
+KERNEL_DIR := /lib/modules/$(shell uname -r)/build
+SCRIPT := $(CURDIR)/create_device.sh
 
-all:
+# Regra padrão
+all: load_module create_device
+
+load_module:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules CFLAGS="-std=c99"
 	
-	sudo insmod kernelgpudriver.ko;
+	sudo insmod kernelgpudriver.ko; 
 
 	rm -f /dev/gpu123
+	
+create_device:
+	@echo "Criando dispositivo /dev/$(MODULE_NAME)..."
+	chmod +x create_device.sh
+	sudo $(SCRIPT) $(MODULE_NAME)
 	
 run: game
 	sudo ./game
