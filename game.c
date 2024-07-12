@@ -44,6 +44,9 @@ sprite_t player, bomb,apple,diamond, apple1, orange, pear, apple2, orange1, pear
 #define nine 0b0010000
 
 
+clock_t start_time, end_time;
+double fps;
+int frame_count = 0;
 
 
 
@@ -426,6 +429,7 @@ void setup () {
 }
 
 int main() {
+    start_time = clock();
     int x, y;
     int fd_gpu;
 
@@ -511,7 +515,6 @@ int main() {
     pthread_create(&botao_thread, NULL, read_botao, NULL);
 
 
-    int number_of_elements = 1;
 
 
 
@@ -531,7 +534,9 @@ int main() {
 
 
 
+    int number_of_elements = 1;
     int i;
+    int delay = 15;
     while(1){
         int lifes=5;
         score=0;
@@ -551,19 +556,23 @@ int main() {
 
             if(stop){
 
-            
+            frame_count++;
             number_of_elements = number_of_elements < MAX_ELEMENTS ? (1 + score / DIFFICULTY_CRITERIA) : number_of_elements;
             sprite_t fallingElement;
-            for(i=0;i<number_of_elements;i++){
+            for(i=0;i<MAX_ELEMENTS;i++){
                 whileCounts[i]++;
                 
                 if(fallingElements[i].visible==0){
                     fallingElements[i].rel_x = (int)(rand() * factor);
-                    fallingElements[i].visible=1;    
+                    
+                    if(i < number_of_elements){ 
+                        fallingElements[i].visible=1;    
+                    }
                     
                 }
+                
                 else {
-                    if(whileCounts[i] >= 30){
+                    if(whileCounts[i] >= delay){
                         fallingElements[i].rel_y++;
                         whileCounts[i] = 0;
                     }
@@ -650,8 +659,8 @@ int main() {
             }
             
             whileCounts[9]++;
-            if (beam.rel_y > 0 && beam.visible == 1) {
-                if (whileCounts[9] >= 15) {
+            if (beam.rel_y > 0) {
+                if (whileCounts[9] >= 0) {
                     beam.rel_y -= 1;
                     whileCounts[9] = 0;
                 }
@@ -669,9 +678,6 @@ int main() {
             *DISPLAY_ptr = linkNumberTo7SegCode(hundreds);
             *DISPLAY_ptr1=linkNumberTo7SegCode(dozens);    
             *DISPLAY_ptr2=linkNumberTo7SegCode(units);	
-            
-            
-            //pthread_mutex_unlock(&lock);
 
             setSpriteOnScreen(beam);
 
@@ -682,6 +688,21 @@ int main() {
 
             setSpriteOnScreen(player);
             // int i;                *DISPLAY_ptr = linkNumberTo7SegCode(hundreds);
+
+            end_time = clock();
+
+            // Calcula o tempo decorrido
+            double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+
+            // Se passou um segundo, calcule e exiba os FPS
+            if (elapsed_time >= 1.0) {
+                fps = frame_count / elapsed_time;
+                printf("FPS: %.2f\n", fps);
+
+                // Reinicie o contador de frames e o tempo inicial
+                frame_count = 0;
+                start_time = clock();
+            }
 
             
             }
