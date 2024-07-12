@@ -16,8 +16,7 @@
 #define MAX 511
 #define MAX_ELEMENTS 9
 #define DIFFICULTY_CRITERIA 5
-
-
+int stop;
 int i, j;
 int xsoma = 0, ysoma = 0;
 int fd_mouse;
@@ -93,6 +92,35 @@ void draw(unsigned char* path, int initial_address){
 
 }
 
+
+int open_physicall (int fd) {
+    if (fd == -1)
+        if ((fd = open( "/dev/mem", (O_RDWR | O_SYNC))) == -1) {
+            printf ("ERROR: could not open \"/dev/mem\"...\n");
+            return (-1);
+        }
+    return fd;
+}
+
+
+
+void* map_physicall(int fd, unsigned int base, unsigned int span) {
+    void *virtual_base;
+
+    // Get a mapping from physical addresses to virtual addresses
+    virtual_base = mmap (NULL, span, (PROT_READ | PROT_WRITE), MAP_SHARED, fd, base);
+    if (virtual_base == MAP_FAILED) {
+        printf ("ERROR: mmap() failed...\n");
+        close (fd);
+        return (NULL);
+    }
+    return virtual_base;
+}
+
+
+
+
+
 void draw_apple_on_memory() {
     draw("sprites/apple.sprite", 10000); //endereço 25
 }
@@ -152,8 +180,8 @@ int unmap_physical(void * virtual_base, unsigned int span) {
 }
 
 
-int linkNumberTo7SegCode(int numero) {
-    switch (numero) {
+int linkNumberTo7SegCode(int number) {
+    switch (number) {
         case 9:
             return nine;
         case 8:
@@ -175,7 +203,7 @@ int linkNumberTo7SegCode(int numero) {
         case 0:
             return zero;
         default:
-            printf("Número %d não tem correspondência definida.\n", numero);
+            printf("Número %d não tem correspondência definida.\n", number);
             break;
     }
 }
@@ -231,6 +259,88 @@ void* read_mouse(void* arg) {
 
     return NULL;
 }
+
+
+
+
+
+
+
+
+
+
+
+int restart;
+// Função da thread para leitura do mouse
+void* read_botao(void* arg) {
+    int fd = -1;               // used to open /dev/mem for access to physical addresses
+    void *LW_virtual;          // used to map physical addresses for the light-weight bridge
+    
+   // Create virtual memory access to the FPGA light-weight bridge
+    if ((fd = open_physicall (fd)) == -1)
+        return (-1);
+    if ((LW_virtual = map_physicall (fd, LW_BRIDGE_BASE, LW_BRIDGE_SPAN)) == NULL)
+        return (-1);
+
+
+        
+    volatile int * chave;
+    chave = (unsigned int *) (LW_virtual + KEYS_BASE);
+    ssize_t n;
+    int x, y;
+    int pause_state;
+    pause_state=1;
+    int restart_state=1;
+    restart=0;
+    stop =1;
+    while (1) {
+        if(*chave==14 && pause_state ==1){
+          pause_state=0; 
+          if(stop == 1) {
+            stop = 0;
+            printf("%d",stop);
+          } else {
+            stop = 1;
+            printf("%d",stop);
+
+          }
+
+        }
+
+        if(*chave==13 && restart_state ==1){//11 7
+          restart_state=0; 
+          if (restart == 0) {
+            restart = 1;
+          } 
+        }
+
+        if(*chave==15 && restart_state==0){
+            restart_state=1;
+            restart=0;
+
+
+        }
+
+        if(*chave==15 && pause_state==0){
+            pause_state=1;
+        }
+
+    }
+
+    return NULL;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 void defineSkinsToFallingElements() {
@@ -318,12 +428,13 @@ void setup () {
 int main() {
     int x, y;
     int fd_gpu;
-    int lifes=5;
+
     color_t color = {0, 3, 0};
     color_t click = {0, 7, 0};
     unsigned int block;
     color_t reset = {6, 7, 7};
     pthread_t mouse_thread;
+    pthread_t botao_thread;
     int t, u;
     volatile int * DISPLAY_ptr;
     volatile int * DISPLAY_ptr1;
@@ -331,7 +442,7 @@ int main() {
     volatile int * DISPLAY_ptr3;
     volatile int * DISPLAY_ptr4;
     volatile int * DISPLAY_ptr5;
-    volatile int * key;
+    // volatile int * key;
 
     int fd = -1;               // used to open /dev/mem for access to physical addresses
     void *LW_virtual;          // used to map physical addresses for the light-weight bridge
@@ -339,15 +450,14 @@ int main() {
     int dozens;
     int units;
     int numero;
-    double factor = 620.0 / (RAND_MAX + 1.0);  // Calcula o factor de escala
+  
     // Gera um número aleatório entre 0 e 619
-
 
     // Inicializa o gerador de números aleatórios
     srand(time(NULL));
 
     setup();
-    sprite_t fallingElements[9]={bomb,apple,diamond, apple1, orange, pear, apple2, orange1, pear1};
+    
     sprite_variation_t skins[4] = {BOMB, 25, 26, 27};
 
     setBackground(bg);
@@ -390,7 +500,7 @@ int main() {
    
    DISPLAY_ptr5 = (unsigned int *) (LW_virtual + HEX5_BASE);
 
-   key = (unsigned int *) (LW_virtual + KEYS_BASE);
+//    key = (unsigned int *) (LW_virtual + KEYS_BASE);
 
 
     // Inicializar o mutex
@@ -398,161 +508,186 @@ int main() {
 
     // Criar a thread para leitura do mouse
     pthread_create(&mouse_thread, NULL, read_mouse, NULL);
+    pthread_create(&botao_thread, NULL, read_botao, NULL);
 
-
-
-
-
-
-    *DISPLAY_ptr3=linkNumberTo7SegCode(5); 
-    *DISPLAY_ptr4=linkNumberTo7SegCode(0);    
-    *DISPLAY_ptr5=linkNumberTo7SegCode(0);	
-
-
-
-
-
-
-    int whileCounts[10] = {0}; //controla fps dos falling elements e do tiro
 
     int number_of_elements = 1;
+
+
+
+
+    
+
+
+    // double factor = 620.0 / (RAND_MAX + 1.0);  // Calcula o factor de escala
+
+    // sprite_t fallingElements[9]={bomb,apple,diamond, apple1, orange, pear, apple2, orange1, pear1};
+
+
+
+
+    // int whileCounts[10] = {0}; //controla fps dos falling elements e do tiro
+
+
+
+
     int i;
+    while(1){
+        int lifes=5;
+        score=0;
+        *DISPLAY_ptr3=linkNumberTo7SegCode(5); 
+        *DISPLAY_ptr4=linkNumberTo7SegCode(0);    
+        *DISPLAY_ptr5=linkNumberTo7SegCode(0);	    
+        double factor = 620.0 / (RAND_MAX + 1.0);  // Calcula o factor de escala
+        sprite_t fallingElements[9]={bomb,apple,diamond, apple1, orange, pear, apple2, orange1, pear1};
 
-    // Loop principal
-    while (1) {
-        number_of_elements = number_of_elements < MAX_ELEMENTS ? (1 + score / DIFFICULTY_CRITERIA) : number_of_elements;
-
-        for(i=0;i<number_of_elements;i++){
-            whileCounts[i]++;
-            if(fallingElements[i].visible==0){
-                fallingElements[i].rel_x = (int)(rand() * factor);
-                fallingElements[i].visible=1;    
-                
+        int whileCounts[10] = {0}; //controla fps dos falling elements e do tiro
+    
+        if(!restart){
+        while (1) {
+            if(restart){
+                break;
             }
-            else {
-                if(whileCounts[i] >= 30){
-                    fallingElements[i].rel_y++;
-                    whileCounts[i] = 0;
-                }
 
-                if(fallingElements[i].rel_y > 479) {
+            if(stop){
 
-                    fallingElements[i].rel_y = 0;
+            
+            number_of_elements = number_of_elements < MAX_ELEMENTS ? (1 + score / DIFFICULTY_CRITERIA) : number_of_elements;
+            sprite_t fallingElement;
+            for(i=0;i<number_of_elements;i++){
+                whileCounts[i]++;
+                
+                if(fallingElements[i].visible==0){
                     fallingElements[i].rel_x = (int)(rand() * factor);
-                    lifes--;
-                    setBackground(red);
-                    usleep(10000);
-                    *DISPLAY_ptr3=linkNumberTo7SegCode(lifes);    	
-                    setBackground(bg);
+                    fallingElements[i].visible=1;    
+                    
                 }
-            }
-            setSpriteOnScreen(fallingElements[i]);   
-        }
-
-        //if(lifes<0) break;
-
-
-        // Atualiza as coordenadas acumuladas
-        pthread_mutex_lock(&lock);
-
-        
-        
-        x = xsoma;
-        y = ysoma;
-        if(click_reset == 1 && beam.rel_y == 0){
-            beam.visible = 1;
-            beam.rel_y = 439;
-            beam.rel_x = xsoma;
-            click_reset=0;
-        }
-        
-        whileCounts[9]++;
-        if (beam.rel_y > 0 && beam.visible == 1) {
-            if (whileCounts[9] >= 15) {
-                beam.rel_y -= 1;
-                whileCounts[9] = 0;
-            }
-        }
-
-        if(beam.rel_y == 0){
-            beam.visible = 0;
-        }
-        
-        for(t = 0; t<number_of_elements; t++){
-            if(collision_between_sprites(beam, fallingElements[t]) == 1) {
-                if(fallingElements[t].variation != BOMB) //se atirou em uma fruta
-                {
-                    setBackground(red);
-                    usleep(10000);
-                    setBackground(bg);
-                    lifes--;
-                    *DISPLAY_ptr3=linkNumberTo7SegCode(lifes);
-                }
-                else{
-                    score++;
-                }
-                
-                printf("colidiu \n");
-                fallingElements[t].visible = 0;
-                fallingElements[t].rel_y = 0;
-                fallingElements[t].variation = skins[rand() % 4];
-                beam.visible=0;
-                beam.rel_y = 0;
-            }
-
-            if(collision_between_sprites(player, fallingElements[t]) == 1) {
-                if(fallingElements[t].variation == BOMB) //se uma bomba atingiu o player
-                {
-                    setBackground(red);
-                    usleep(10000);
-                    setBackground(bg);
-                    lifes--;
-                    *DISPLAY_ptr3=linkNumberTo7SegCode(lifes);
-                }
-                else { //se uma fruta atingiu o player
-                    for(u = 0 ; u < 10; u++){
-                        player.rel_y-= 2;
-                        setSpriteOnScreen(player);
-                        usleep(5000);
+                else {
+                    if(whileCounts[i] >= 30){
+                        fallingElements[i].rel_y++;
+                        whileCounts[i] = 0;
                     }
-                    for(u = 0 ; u < 10; u++){
-                        player.rel_y+= 2;
-                        setSpriteOnScreen(player);
-                        usleep(5000);
+
+                    if(fallingElements[i].rel_y > 479) {
+
+                        fallingElements[i].rel_y = 0;
+                        fallingElements[i].rel_x = (int)(rand() * factor);
+                        lifes--;
+                        setBackground(red);
+                        usleep(10000);
+                        *DISPLAY_ptr3=linkNumberTo7SegCode(lifes);    	
+                        setBackground(bg);
                     }
-                    score++;
                 }
-                fallingElements[t].rel_y = 0;
-                fallingElements[t].visible = 0;
-                fallingElements[t].variation = skins[rand() % 4];
-                beam.rel_y = 0;
+                setSpriteOnScreen(fallingElements[i]);   
+
+
+                if(collision_between_sprites(beam, fallingElements[i]) == 1) {
+                    if(fallingElements[i].variation != BOMB) //se atirou em uma fruta
+                    {
+                        setBackground(red);
+                        usleep(10000);
+                        setBackground(bg);
+                        lifes--;
+                        *DISPLAY_ptr3=linkNumberTo7SegCode(lifes);
+                    }
+                    else{
+                        score++;
+                    }
+                    
+                    fallingElements[i].visible = 0;
+                    fallingElements[i].rel_y = 0;
+                    fallingElements[i].variation = skins[rand() % 4];
+                    beam.visible=0;
+                    beam.rel_y = 0;
+                }
+
+                if(collision_between_sprites(player, fallingElements[i]) == 1) {
+                    if(fallingElements[i].variation == BOMB) //se uma bomba atingiu o player
+                    {
+                        setBackground(red);
+                        usleep(10000);
+                        setBackground(bg);
+                        lifes--;
+                        *DISPLAY_ptr3=linkNumberTo7SegCode(lifes);
+                    }
+                    else { //se uma fruta atingiu o player
+                        for(u = 0 ; u < 10; u++){
+                            player.rel_y-= 2;
+                            setSpriteOnScreen(player);
+                            usleep(5000);
+                        }
+                        for(u = 0 ; u < 10; u++){
+                            player.rel_y+= 2;
+                            setSpriteOnScreen(player);
+                            usleep(5000);
+                        }
+                        score++;
+                    }
+                    fallingElements[i].rel_y = 0;
+                    fallingElements[i].visible = 0;
+                    fallingElements[i].variation = skins[rand() % 4];
+                    beam.rel_y = 0;
+                }
+
             }
 
+            //if(lifes<0) break;
+
+
+            // Atualiza as coordenadas acumuladas
+            //pthread_mutex_lock(&lock);
+
+            
+            
+            x = xsoma;
+            y = ysoma;
+            if(click_reset == 1 && beam.rel_y == 0){
+                beam.visible = 1;
+                beam.rel_y = 439;
+                beam.rel_x = xsoma;
+                click_reset=0;
+            }
+            
+            whileCounts[9]++;
+            if (beam.rel_y > 0 && beam.visible == 1) {
+                if (whileCounts[9] >= 15) {
+                    beam.rel_y -= 1;
+                    whileCounts[9] = 0;
+                }
+            }
+
+            if(beam.rel_y == 0){
+                beam.visible = 0;
+            }
+            
+
+            hundreds = score % 10;
+            dozens= (score % 100) / 10;
+            units = score / 100;  
+
+            *DISPLAY_ptr = linkNumberTo7SegCode(hundreds);
+            *DISPLAY_ptr1=linkNumberTo7SegCode(dozens);    
+            *DISPLAY_ptr2=linkNumberTo7SegCode(units);	
+            
+            
+            //pthread_mutex_unlock(&lock);
+
+            setSpriteOnScreen(beam);
+
+
+            // Criar a estrutura do sprite com as novas coordenadas
+            player.rel_x = x;
+
+
+            setSpriteOnScreen(player);
+            // int i;                *DISPLAY_ptr = linkNumberTo7SegCode(hundreds);
+
+            
+            }
         }
-
-        hundreds = score % 10;
-        dozens= (score % 100) / 10;
-        units = score / 100;  
-
-        *DISPLAY_ptr = linkNumberTo7SegCode(hundreds);
-        *DISPLAY_ptr1=linkNumberTo7SegCode(dozens);    
-        *DISPLAY_ptr2=linkNumberTo7SegCode(units);	
-        
-        
-        pthread_mutex_unlock(&lock);
-
-        setSpriteOnScreen(beam);
-
-
-        // Criar a estrutura do sprite com as novas coordenadas
-        player.rel_x = x;
-
-
-        setSpriteOnScreen(player);
-        // int i;                *DISPLAY_ptr = linkNumberTo7SegCode(hundreds);
-
-        
-        
+    
+        }
     }
 
     // Fechar os dispositivos
