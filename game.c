@@ -43,6 +43,10 @@ sprite_t player, bomb,apple,diamond, apple1, orange, pear, apple2, orange1, pear
 #define eight 0b0000000
 #define nine 0b0010000
 
+#define B1 14
+#define B2 13 
+#define B3 11
+#define B4 7
 
 clock_t start_time, end_time;
 double fps;
@@ -288,8 +292,8 @@ void* read_botao(void* arg) {
 
 
         
-    volatile int * chave;
-    chave = (unsigned int *) (LW_virtual + KEYS_BASE);
+    volatile int * key;
+    key = (unsigned int *) (LW_virtual + KEYS_BASE);
     ssize_t n;
     int x, y;
     int pause_state;
@@ -313,7 +317,7 @@ void* read_botao(void* arg) {
 
 
 
-        if(*chave==14 && pause_state ==1){
+        if(*key==B1 && pause_state ==1){
           pause_state=0; 
           if(stop == 1) {
             stop = 0;
@@ -326,7 +330,7 @@ void* read_botao(void* arg) {
 
 
 
-        if(*chave==13 && restart_state ==1){//11 7
+        if(*key==B2 && restart_state ==1){//11 7
           restart_state=0; 
           if (restart == 0) {
             restart = 1;
@@ -336,7 +340,7 @@ void* read_botao(void* arg) {
 
 
 
-        if(*chave==7 && end_state ==1){//11 7
+        if(*key==B3 && end_state ==1){//11 7
         end_state=0; 
         if (end == 0) {
         end = 1;
@@ -346,7 +350,7 @@ void* read_botao(void* arg) {
 
 
 
-        if(*chave==11 && start_state ==1){//11 7
+        if(*key==B4 && start_state ==1){//11 7
         start_state=0; 
         if (start == 0) {
             start = 1;
@@ -354,7 +358,7 @@ void* read_botao(void* arg) {
     }
 
 
-        if(*chave==15 && start_state==0){
+        if(*key==15 && start_state==0){
             start_state=1;
             start=0;
         }
@@ -369,7 +373,7 @@ void* read_botao(void* arg) {
 
 
 
-        if(*chave==15 && restart_state==0){
+        if(*key==15 && restart_state==0){
             restart_state=1;
             restart=0;
 
@@ -378,7 +382,7 @@ void* read_botao(void* arg) {
 
 
 
-        if(*chave==15 && pause_state==0){
+        if(*key==15 && pause_state==0){
             pause_state=1;
         }
 
