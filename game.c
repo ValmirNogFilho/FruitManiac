@@ -272,7 +272,7 @@ void* read_mouse(void* arg) {
 
 int start;
 int end;
-
+start=1;
 
 int restart;
 // Função da thread para leitura do mouse
@@ -305,7 +305,7 @@ void* read_botao(void* arg) {
     int end_state=1;
 
 
-    start=1;
+    
     end=0;
     while (1) {
 
@@ -568,8 +568,6 @@ int main() {
     
     sprite_variation_t skins[4] = {BOMB, 25, 26, 27};
 
-    
-
     // Abrir o dispositivo do mouse
     fd_mouse = open(MOUSE_DEVICE, O_RDONLY );
     if (fd_mouse == -1) {
@@ -759,7 +757,7 @@ int main() {
 
 
                     // Atualiza as coordenadas acumuladas
-                    //pthread_mutex_lock(&lock);
+                    // pthread_mutex_lock(&lock);
 
                     
                     
@@ -847,7 +845,7 @@ int main() {
     // Fechar os dispositivos
     close(fd_mouse);
     close(fd_gpu);
-
+    
     // Destruir o mutex
     pthread_mutex_destroy(&lock);
 
