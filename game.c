@@ -270,7 +270,8 @@ void* read_mouse(void* arg) {
 
 
 
-
+int start;
+int end;
 
 
 int restart;
@@ -296,19 +297,34 @@ void* read_botao(void* arg) {
     int restart_state=1;
     restart=0;
     stop =1;
+
+
+
+
+    int start_state=1;
+    int end_state=1;
+
+
+    start=1;
+    end=0;
     while (1) {
+
+
+
+
+
         if(*chave==14 && pause_state ==1){
           pause_state=0; 
           if(stop == 1) {
             stop = 0;
-            printf("%d",stop);
           } else {
             stop = 1;
-            printf("%d",stop);
-
           }
 
         }
+
+
+
 
         if(*chave==13 && restart_state ==1){//11 7
           restart_state=0; 
@@ -317,12 +333,50 @@ void* read_botao(void* arg) {
           } 
         }
 
+
+
+
+        if(*chave==7 && end_state ==1){//11 7
+        end_state=0; 
+        if (end == 0) {
+        end = 1;
+        } 
+    }
+
+
+
+
+        if(*chave==11 && start_state ==1){//11 7
+        start_state=0; 
+        if (start == 0) {
+            start = 1;
+        } 
+    }
+
+
+        if(*chave==15 && start_state==0){
+            start_state=1;
+            start=0;
+        }
+
+
+
+
+
+
+
+
+
+
+
         if(*chave==15 && restart_state==0){
             restart_state=1;
             restart=0;
 
 
         }
+
+
 
         if(*chave==15 && pause_state==0){
             pause_state=1;
@@ -419,14 +473,64 @@ void reset_sprites() {
 
 }
 
+void erase_bg_screen() {
+    int block_address;
+    color_t apagar = {6, 7, 7};
+    for(block_address = 0; block_address < 4800; block_address++) {
+        editBlockOnBackgroundMemory(block_address, apagar);
+    }
+}
+
+void set_screen(char * path) {
+    FILE *file;
+    int r, g, b;
+    int i, j;
+    int address;
+    color_t color;
+    // Abra o arquivo em modo leitura
+    file = fopen(path, "r");
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo.\n");
+        return;
+    }
+
+    for(j = 0; j < 80; j++) {
+        for(i = 0; i < 60; i++) {
+            address = 80 * i + j;
+            if(fscanf(file, "%d %d %d", &r, &g, &b) != EOF) {
+                color.R = r;
+                color.G = g;
+                color.B = b;
+                editBlockOnBackgroundMemory(address, color);
+            }
+        }
+    }
+    fclose(file);
+}
+
+void set_start_screen() {
+    set_screen("sprites/inicio.back");
+}
+
+void set_pause_screen() {
+    set_screen("sprites/pause.back");
+}
+
+void set_game_over_screen() {
+    set_screen("sprites/fim.back");
+}
+
 void setup () {
     reset_sprites();
-    defineSkinsToFallingElements();
     draw_apple_on_memory();
     draw_orange_on_memory();
     draw_pear_on_memory();
-
+    defineSkinsToFallingElements();
+    erase_bg_screen();
+    set_start_screen();
 }
+
+
 
 int main() {
     start_time = clock();
@@ -464,7 +568,7 @@ int main() {
     
     sprite_variation_t skins[4] = {BOMB, 25, 26, 27};
 
-    setBackground(bg);
+    
 
     // Abrir o dispositivo do mouse
     fd_mouse = open(MOUSE_DEVICE, O_RDONLY );
@@ -514,200 +618,229 @@ int main() {
     pthread_create(&mouse_thread, NULL, read_mouse, NULL);
     pthread_create(&botao_thread, NULL, read_botao, NULL);
 
-
-
-
-
-
-    
-
-
-    // double factor = 620.0 / (RAND_MAX + 1.0);  // Calcula o factor de escala
-
-    // sprite_t fallingElements[9]={bomb,apple,diamond, apple1, orange, pear, apple2, orange1, pear1};
-
-
-
-
-    // int whileCounts[10] = {0}; //controla fps dos falling elements e do tiro
-
-
+    color_t color1={0,7,0};
 
 
     int number_of_elements = 1;
     int i;
     int delay = 15;
-    while(1){
-        int lifes=5;
+    int old_score=1;
+
+    while(end==0){
+        int lifes=1;
         score=0;
-        *DISPLAY_ptr3=linkNumberTo7SegCode(5); 
+        *DISPLAY_ptr3=linkNumberTo7SegCode(lifes); 
         *DISPLAY_ptr4=linkNumberTo7SegCode(0);    
         *DISPLAY_ptr5=linkNumberTo7SegCode(0);	    
         double factor = 620.0 / (RAND_MAX + 1.0);  // Calcula o factor de escala
         sprite_t fallingElements[9]={bomb,apple,diamond, apple1, orange, pear, apple2, orange1, pear1};
 
         int whileCounts[10] = {0}; //controla fps dos falling elements e do tiro
-    
-        if(!restart){
-        while (1) {
-            if(restart){
-                break;
-            }
+        setBackground(color1);
 
-            if(stop){
 
-            frame_count++;
-            number_of_elements = number_of_elements < MAX_ELEMENTS ? (1 + score / DIFFICULTY_CRITERIA) : number_of_elements;
-            sprite_t fallingElement;
-            for(i=0;i<MAX_ELEMENTS;i++){
-                whileCounts[i]++;
-                
-                if(fallingElements[i].visible==0){
-                    fallingElements[i].rel_x = (int)(rand() * factor);
+
+
+        if(!restart && !start){ //jogo propriamente dito, se entrar no if é possível jogar. Toda lógica do jogo está abaixo. //start==1
+            erase_bg_screen();
+            setBackground(bg);
+            while (1) {
+
+
+                if(score%10==0 && old_score!=score){
+                    delay--;
+                    old_score=score;
+                    }
+
+
+                if(restart){
+                    break;
+                }
+
+
+                if(end){
+                    break;
+                }
+
+                if(stop){
+
+                    frame_count++;
+                    number_of_elements = number_of_elements < MAX_ELEMENTS ? (1 + score / DIFFICULTY_CRITERIA) : number_of_elements;
+                    sprite_t fallingElement;
+                    for(i=0;i<MAX_ELEMENTS;i++){
+
+                        
+                        whileCounts[i]++;
+                        
+                        if(fallingElements[i].visible==0){
+                            fallingElements[i].rel_x = (int)(rand() * factor);
+                            
+                            if(i < number_of_elements){ 
+                                fallingElements[i].visible=1;    
+                            }
+                            
+                        }
+                        
+                        else {
+                            if(whileCounts[i] >= delay){
+                                fallingElements[i].rel_y++;
+                                whileCounts[i] = 0;
+                            }
+
+                            if(fallingElements[i].rel_y > 479) {
+
+                                fallingElements[i].rel_y = 0;
+                                fallingElements[i].rel_x = (int)(rand() * factor);
+                                lifes--;
+                                setBackground(red);
+                                usleep(10000);
+                                *DISPLAY_ptr3=linkNumberTo7SegCode(lifes);    	
+                                setBackground(bg);
+                            }
+                        }
+                        setSpriteOnScreen(fallingElements[i]);   
+
+
+                        if(collision_between_sprites(beam, fallingElements[i]) == 1) {
+                            if(fallingElements[i].variation != BOMB) //se atirou em uma fruta
+                            {
+                                setBackground(red);
+                                usleep(10000);
+                                setBackground(bg);
+                                lifes--;
+                                *DISPLAY_ptr3=linkNumberTo7SegCode(lifes);
+                            }
+                            else{
+                                score++;
+                            }
+                            
+                            fallingElements[i].visible = 0;
+                            fallingElements[i].rel_y = 0;
+                            fallingElements[i].variation = skins[rand() % 4];
+                            beam.visible=0;
+                            beam.rel_y = 0;
+                        }
+
+                        if(collision_between_sprites(player, fallingElements[i]) == 1) {
+                            if(fallingElements[i].variation == BOMB) //se uma bomba atingiu o player
+                            {
+                                setBackground(red);
+                                usleep(10000);
+                                setBackground(bg);
+                                lifes--;
+                                *DISPLAY_ptr3=linkNumberTo7SegCode(lifes);
+                            }
+                            else if (fallingElements[i].variation == DIAMOND) // se o player pegar um diamante
+                            {
+                                lifes++;
+                                *DISPLAY_ptr3=linkNumberTo7SegCode(lifes);
+                            }
+                            else { //se uma fruta atingiu o player
+                                for(u = 0 ; u < 10; u++){
+                                    player.rel_y-= 2;
+                                    setSpriteOnScreen(player);
+                                    usleep(5000);
+                                }
+                                for(u = 0 ; u < 10; u++){
+                                    player.rel_y+= 2;
+                                    setSpriteOnScreen(player);
+                                    usleep(5000);
+                                }
+                                score++;
+                            }
+                            fallingElements[i].rel_y = 0;
+                            fallingElements[i].visible = 0;
+                            fallingElements[i].variation = skins[rand() % 4];
+                            beam.rel_y = 0;
+                        }
+                    }
+
+                    if(lifes<=0) break;
+
+
+                    // Atualiza as coordenadas acumuladas
+                    //pthread_mutex_lock(&lock);
+
                     
-                    if(i < number_of_elements){ 
-                        fallingElements[i].visible=1;    
+                    
+                    x = xsoma;
+                    y = ysoma;
+                    if(click_reset == 1 && beam.rel_y == 0){
+                        beam.visible = 1;
+                        beam.rel_y = 439;
+                        beam.rel_x = xsoma;
+                        click_reset=0;
                     }
                     
-                }
+                    whileCounts[9]++;
+                    if (beam.rel_y > 0) {
+                        if (whileCounts[9] >= 0) {
+                            beam.rel_y -= 1;
+                            whileCounts[9] = 0;
+                        }
+                    }
+
+                    if(beam.rel_y == 0){
+                        beam.visible = 0;
+                    }
+                    
+
+                    hundreds = score % 10;
+                    dozens= (score % 100) / 10;
+                    units = score / 100;  
+
+                    *DISPLAY_ptr = linkNumberTo7SegCode(hundreds);
+                    *DISPLAY_ptr1=linkNumberTo7SegCode(dozens);    
+                    *DISPLAY_ptr2=linkNumberTo7SegCode(units);	
+
+                    setSpriteOnScreen(beam);
+
+
+                    // Criar a estrutura do sprite com as novas coordenadas
+                    player.rel_x = x;
+
+
+                    setSpriteOnScreen(player);
+                    // int i;                *DISPLAY_ptr = linkNumberTo7SegCode(hundreds);
+
+                    end_time = clock();
+
+                    // Calcula o tempo decorrido
+                    double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+
+                    // Se passou um segundo, calcule e exiba os FPS
+                    if (elapsed_time >= 1.0) {
+                        fps = frame_count / elapsed_time;
+                        printf("FPS: %.2f\n", fps);
+
+                        // Reinicie o contador de frames e o tempo inicial
+                        frame_count = 0;
+                        start_time = clock();
+                    }
+
                 
+                }
+
                 else {
-                    if(whileCounts[i] >= delay){
-                        fallingElements[i].rel_y++;
-                        whileCounts[i] = 0;
-                    }
-
-                    if(fallingElements[i].rel_y > 479) {
-
-                        fallingElements[i].rel_y = 0;
-                        fallingElements[i].rel_x = (int)(rand() * factor);
-                        lifes--;
-                        setBackground(red);
-                        usleep(10000);
-                        *DISPLAY_ptr3=linkNumberTo7SegCode(lifes);    	
-                        setBackground(bg);
-                    }
-                }
-                setSpriteOnScreen(fallingElements[i]);   
-
-
-                if(collision_between_sprites(beam, fallingElements[i]) == 1) {
-                    if(fallingElements[i].variation != BOMB) //se atirou em uma fruta
-                    {
-                        setBackground(red);
-                        usleep(10000);
-                        setBackground(bg);
-                        lifes--;
-                        *DISPLAY_ptr3=linkNumberTo7SegCode(lifes);
-                    }
-                    else{
-                        score++;
-                    }
-                    
-                    fallingElements[i].visible = 0;
-                    fallingElements[i].rel_y = 0;
-                    fallingElements[i].variation = skins[rand() % 4];
-                    beam.visible=0;
-                    beam.rel_y = 0;
-                }
-
-                if(collision_between_sprites(player, fallingElements[i]) == 1) {
-                    if(fallingElements[i].variation == BOMB) //se uma bomba atingiu o player
-                    {
-                        setBackground(red);
-                        usleep(10000);
-                        setBackground(bg);
-                        lifes--;
-                        *DISPLAY_ptr3=linkNumberTo7SegCode(lifes);
-                    }
-                    else { //se uma fruta atingiu o player
-                        for(u = 0 ; u < 10; u++){
-                            player.rel_y-= 2;
-                            setSpriteOnScreen(player);
-                            usleep(5000);
-                        }
-                        for(u = 0 ; u < 10; u++){
-                            player.rel_y+= 2;
-                            setSpriteOnScreen(player);
-                            usleep(5000);
-                        }
-                        score++;
-                    }
-                    fallingElements[i].rel_y = 0;
-                    fallingElements[i].visible = 0;
-                    fallingElements[i].variation = skins[rand() % 4];
-                    beam.rel_y = 0;
+                    set_pause_screen();
+                    while (!stop) {}
+                    erase_bg_screen();
                 }
 
             }
 
-            //if(lifes<0) break;
 
-
-            // Atualiza as coordenadas acumuladas
-            //pthread_mutex_lock(&lock);
-
-            
-            
-            x = xsoma;
-            y = ysoma;
-            if(click_reset == 1 && beam.rel_y == 0){
-                beam.visible = 1;
-                beam.rel_y = 439;
-                beam.rel_x = xsoma;
-                click_reset=0;
-            }
-            
-            whileCounts[9]++;
-            if (beam.rel_y > 0) {
-                if (whileCounts[9] >= 0) {
-                    beam.rel_y -= 1;
-                    whileCounts[9] = 0;
-                }
-            }
-
-            if(beam.rel_y == 0){
-                beam.visible = 0;
-            }
-            
-
-            hundreds = score % 10;
-            dozens= (score % 100) / 10;
-            units = score / 100;  
-
-            *DISPLAY_ptr = linkNumberTo7SegCode(hundreds);
-            *DISPLAY_ptr1=linkNumberTo7SegCode(dozens);    
-            *DISPLAY_ptr2=linkNumberTo7SegCode(units);	
-
-            setSpriteOnScreen(beam);
-
-
-            // Criar a estrutura do sprite com as novas coordenadas
-            player.rel_x = x;
-
-
-            setSpriteOnScreen(player);
-            // int i;                *DISPLAY_ptr = linkNumberTo7SegCode(hundreds);
-
-            end_time = clock();
-
-            // Calcula o tempo decorrido
-            double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-
-            // Se passou um segundo, calcule e exiba os FPS
-            if (elapsed_time >= 1.0) {
-                fps = frame_count / elapsed_time;
-                printf("FPS: %.2f\n", fps);
-
-                // Reinicie o contador de frames e o tempo inicial
-                frame_count = 0;
-                start_time = clock();
-            }
-
-            
-            }
         }
-    
+
+        //game over
+        if (lifes == 0) {
+            set_game_over_screen();
+            while (1){
+                if(end == 1) break;
+                if(start == 1) break;
+
+            }
+            erase_bg_screen();    
         }
     }
 
