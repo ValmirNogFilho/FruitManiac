@@ -22,23 +22,29 @@ create_device:
 run: game
 	sudo ./game
 
-game: game.o instructions.o gpulib.o
-	gcc -o game game.o gpulib.o instructions.o -pthread
+game: game.o instructions.o gpulib.o displayprinter.o drawer.o inputbehaviour.o
+	gcc -o game game.o lib/gpulib.o lib/instructions.o gameFolder/displayprinter.o gameFolder/drawer.o gameFolder/inputbehaviour.o -pthread
 	rm -f gpulib.o instructions.o
 
-program: botao.o instructions.o gpulib.o
-	gcc -o botao botao.o gpulib.o instructions.o -pthread
-
 instructions.o: lib/instructions.c
-	gcc -c lib/instructions.c -o instructions.o
+	gcc -c lib/instructions.c -o lib/instructions.o
 
 gpulib.o: lib/gpulib.c
-	gcc -c lib/gpulib.c
+	gcc -c lib/gpulib.c -o lib/gpulib.o
+
+displayprinter.o: gameFolder/displayprinter.c
+	gcc -c gameFolder/displayprinter.c -o gameFolder/displayprinter.o
+
+drawer.o: gameFolder/drawer.c
+	gcc -c gameFolder/drawer.c -o gameFolder/drawer.o
+
+inputbehaviour.o: gameFolder/inputbehaviour.c
+	gcc -c gameFolder/inputbehaviour.c -o gameFolder/inputbehaviour.o
 
 game.o: game.c
 	gcc -c game.c -o game.o
 
 clean:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
-	rm -f gpulib.o instructions.o game
+	rm -f game gpulib.o instructions.o gameFolder/displayprinter.o gameFolder/drawer.o gameFolder/inputbehaviour.o
 	rm -f kernelgpudriver.mod.o kernelgpudriver.mod kernelgpudriver.ko.cmd kernelgpudriver.o kernelgpudriver.mod.o.cmd kernelgpudriver.o.cmd
