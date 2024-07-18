@@ -1,15 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <linux/input.h>
 #include <unistd.h>
 #include <string.h>
 #include <pthread.h>
 #include "lib/gpulib.h"
 #include <time.h>
-#include "enderecos.h"
-#include <fcntl.h>
-#include <sys/mman.h>
 #include "gameFolder/display.h"
 #include "gameFolder/drawer.h"
 #include "gameFolder/inputbehaviour.h"
@@ -34,7 +29,6 @@ color_t red = {7, 0, 0};
 color_t white = {7,7,7};
 color_t brown = {6,3,0};
 color_t bg = {0, 3, 0};
-
 
 int collision_between_sprites(sprite_t spr1, sprite_t spr2) {
     if (spr1.rel_x < 10 && spr2.rel_x < 10) //lado extremo esquerdo: x < 10
