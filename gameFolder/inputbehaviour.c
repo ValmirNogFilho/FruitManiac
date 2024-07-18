@@ -6,6 +6,10 @@
 #include "inputbehaviour.h"
 #include "../lib/gpulib.h"
 #include "addresses.h"
+#include <fcntl.h>   
+#include <sys/mman.h>
+#include <errno.h>
+
 
 #define B1 14
 #define B2 13 
@@ -26,6 +30,30 @@ int end;
 int restart;
 int stop;
 
+
+static int open_physical (int fd) {
+    if (fd == -1)
+        if ((fd = open( "/dev/mem", (O_RDWR | O_SYNC))) == -1) {
+            printf ("ERROR: could not open \"/dev/mem\"...\n");
+            return (-1);
+        }
+    return fd;
+}
+
+
+
+static void* map_physical(int fd, unsigned int base, unsigned int span) {
+    void *virtual_base;
+
+    // Get a mapping from physical addresses to virtual addresses
+    virtual_base = mmap (NULL, span, (PROT_READ | PROT_WRITE), MAP_SHARED, fd, base);
+    if (virtual_base == MAP_FAILED) {
+        printf ("ERROR: mmap() failed...\n");
+        close (fd);
+        return (NULL);
+    }
+    return virtual_base;
+}
 
 void* read_mouse(void* arg) {
     
@@ -74,9 +102,9 @@ void* read_key(void* arg) {
     void *LW_virtual;          // used to map physical addresses for the light-weight bridge
     
    // Create virtual memory access to the FPGA light-weight bridge
-    if ((fd = open_physicall (fd)) == -1)
+    if ((fd = open_physical (fd)) == -1)
         return (-1);
-    if ((LW_virtual = map_physicall (fd, LW_BRIDGE_BASE, LW_BRIDGE_SPAN)) == NULL)
+    if ((LW_virtual = map_physical (fd, LW_BRIDGE_BASE, LW_BRIDGE_SPAN)) == NULL)
         return (-1);
 
 
