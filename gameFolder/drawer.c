@@ -44,18 +44,18 @@ void draw(unsigned char* path, int initial_address){
 }
 
 void draw_apple_on_memory() {
-    draw("sprites/apple.sprite", 10000); //endereço 25
+    draw("gameFolder/sprites/apple.sprite", 10000); //endereço 25
 }
 
 void draw_orange_on_memory() {
-    draw("sprites/orange.sprite", 10400); //endereço 26
+    draw("gameFolder/sprites/orange.sprite", 10400); //endereço 26
 }
 
 void draw_pear_on_memory() {
     color_t transparent = {6, 7, 7};
     int j;
 
-    draw("sprites/pear.sprite", 10800); //endereço 27
+    draw("gameFolder/sprites/pear.sprite", 10800); //endereço 27
     for(j = 0; j < 20; j++) {
             setPixelOnSpriteMemory(11200+j, transparent); //eliminando linha extra exibida pela gpu
     }
@@ -99,13 +99,13 @@ void set_screen(char * path) {
 }
 
 void set_start_screen() {
-    set_screen("sprites/inicio.back");
+    set_screen("gameFolder/sprites/inicio.back");
 }
 
 void set_pause_screen() {
-    set_screen("sprites/pause.back");
+    set_screen("gameFolder/sprites/pause.back");
 }
 
 void set_game_over_screen() {
-    set_screen("sprites/fim.back");
+    set_screen("gameFolder/sprites/fim.back");
 }
