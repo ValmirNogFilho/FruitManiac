@@ -53,7 +53,7 @@ double fps;
 int frame_count = 0;
 
 
-
+color_t black = {0, 0, 0};
 color_t green = {0,7,0};
 color_t red = {7, 0, 0};
 color_t white = {7,7,7};
@@ -280,7 +280,7 @@ start=1;
 
 int restart;
 // Função da thread para leitura do mouse
-void* read_botao(void* arg) {
+void* read_key(void* arg) {
     int fd = -1;               // used to open /dev/mem for access to physical addresses
     void *LW_virtual;          // used to map physical addresses for the light-weight bridge
     
@@ -546,7 +546,7 @@ int main() {
     unsigned int block;
     color_t reset = {6, 7, 7};
     pthread_t mouse_thread;
-    pthread_t botao_thread;
+    pthread_t key_thread;
     int t, u;
     volatile int * DISPLAY_ptr;
     volatile int * DISPLAY_ptr1;
@@ -618,7 +618,7 @@ int main() {
 
     // Criar a thread para leitura do mouse
     pthread_create(&mouse_thread, NULL, read_mouse, NULL);
-    pthread_create(&botao_thread, NULL, read_botao, NULL);
+    pthread_create(&key_thread, NULL, read_key, NULL);
 
     color_t color1={0,7,0};
 
@@ -629,7 +629,7 @@ int main() {
     int old_score=1;
 
     while(end==0){
-        int lifes=1;
+        int lifes=5;
         score=0;
         *DISPLAY_ptr3=linkNumberTo7SegCode(lifes); 
         *DISPLAY_ptr4=linkNumberTo7SegCode(0);    
@@ -845,6 +845,10 @@ int main() {
             erase_bg_screen();    
         }
     }
+
+    reset_sprites();
+    erase_bg_screen();
+    setBackground(black);
 
     // Fechar os dispositivos
     close(fd_mouse);
