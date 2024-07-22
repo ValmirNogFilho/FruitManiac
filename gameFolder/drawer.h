@@ -13,5 +13,6 @@ void erase_bg_screen();
 void set_start_screen();
 void set_pause_screen();
 void set_game_over_screen();
+void set_bg_screen();
 
 #endif // GAME_GRAPHICS_H
