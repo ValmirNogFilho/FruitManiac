@@ -71,6 +71,7 @@ void erase_bg_screen() {
     }
 }
 
+
 void set_screen(char * path) {
     FILE *file;
     int r, g, b;
@@ -98,12 +99,42 @@ void set_screen(char * path) {
     fclose(file);
 }
 
+void set_bg_screen() {
+    set_screen("gameFolder/sprites/bg.back");
+}
+
 void set_start_screen() {
     set_screen("gameFolder/sprites/inicio.back");
 }
 
 void set_pause_screen() {
-    set_screen("gameFolder/sprites/pause.back");
+
+    FILE *file;
+    int r, g, b;
+    int i, j;
+    int address;
+    color_t color;
+    // Abra o arquivo em modo leitura
+    file = fopen("gameFolder/sprites/pause.back", "r");
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo.\n");
+        return;
+    }
+
+    for(j = 0; j < 80; j++) {
+        for(i = 0; i < 60; i++) {
+            address = 80 * i + j;
+            if(fscanf(file, "%d %d %d", &r, &g, &b) != EOF && i > 20 && i < 35 && j < 45) {
+                color.R = r;
+                color.G = g;
+                color.B = b;
+                editBlockOnBackgroundMemory(address, color);
+            }
+        }
+    }
+    fclose(file);
+
+    // set_screen();
 }
 
 void set_game_over_screen() {
