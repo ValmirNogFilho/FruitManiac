@@ -97,6 +97,9 @@ display_mapping() {
     
     DISPLAY_ptr5 = (unsigned int *) (LW_virtual + HEX5_BASE);
 
+    *DISPLAY_ptr4 = 127;
+    *DISPLAY_ptr5 = 127;
+
 }
 
 
