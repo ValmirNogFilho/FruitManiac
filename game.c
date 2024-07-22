@@ -376,6 +376,7 @@ int main() {
 
         //game over
         if (lifes == 0) {
+            reset_sprites();
             set_game_over_screen();
             while (1){
                 if(end == 1) break;
