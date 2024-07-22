@@ -28,7 +28,7 @@ color_t green = {0,7,0};
 color_t red = {7, 0, 0};
 color_t white = {7,7,7};
 color_t brown = {6,3,0};
-color_t bg = {0, 3, 0};
+color_t bg = {3, 5, 7};
 
 int collision_between_sprites(sprite_t spr1, sprite_t spr2) {
     if (spr1.rel_x < 10 && spr2.rel_x < 10) //lado extremo esquerdo: x < 10
@@ -54,6 +54,7 @@ void defineSkinsToFallingElements() {
     pear.rel_y = 20;
     pear.variation = 27;
     pear.visible = 0;
+
 
 
     apple2.address = 12;
@@ -163,12 +164,12 @@ int main() {
     pthread_create(&mouse_thread, NULL, read_mouse, NULL);
     pthread_create(&key_thread, NULL, read_key, NULL);
 
-    color_t color1={0,7,0};
+    color_t color1={0,4,3};
 
 
     int number_of_elements = 1;
     int i;
-    int delay = 15;
+    int delay = 12;
     int old_score=1;
 
     while(end==0){
@@ -191,10 +192,11 @@ int main() {
         if(!restart && !start){ //jogo propriamente dito, se entrar no if é possível jogar. Toda lógica do jogo está abaixo. //start==1
             erase_bg_screen();
             setBackground(bg);
+            set_bg_screen();
             while (1) {
 
 
-                if(score%10==0 && old_score!=score){
+                if(score%15==0 && old_score!=score && score < 45){
                     delay--;
                     old_score=score;
                     }
@@ -277,7 +279,7 @@ int main() {
                                 lifes--;
                                 setToLifeDigit(lifes);
                             }
-                            else if (fallingElements[i].variation == DIAMOND) // se o player pegar um diamante
+                            else if (fallingElements[i].variation == DIAMOND && lifes < 9) // se o player pegar um diamante
                             {
                                 lifes++;
                                 setToLifeDigit(lifes);
@@ -364,7 +366,7 @@ int main() {
                 else {
                     set_pause_screen();
                     while (!stop) {}
-                    erase_bg_screen();
+                    set_bg_screen();
                 }
 
             }
