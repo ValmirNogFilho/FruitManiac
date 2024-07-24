@@ -24,10 +24,10 @@ O Visual Studio Code, conhecido como VSCode, é um editor de código-fonte ampla
 ## Conceitos importantes:
 
 * GPU
-Unidade de processamento gráfico, também conhecida como GPU, é um componente eletrônico projetado para acelerar tarefas relacionadas à computação gráfica e ao processamento de imagens em uma ampla gama de dispositivos, incluindo placas de vídeo, placas-mãe, smartphones e computadores pessoais (PCs). A capacidade da GPU de realizar cálculos matemáticos complexos de forma rápida e eficiente reduz significativamente o tempo necessário para que um computador execute uma variedade de programas.(Caso de dúvidas, consultar o Problema 2) [rep pbl2](https://github.com/fabiomirs/PBL_2_Sistemas-Digitais)
+Unidade de processamento gráfico, também conhecida como GPU, é um componente eletrônico projetado para acelerar tarefas relacionadas à computação gráfica e ao processamento de imagens em uma ampla gama de dispositivos, incluindo placas de vídeo, placas-mãe, smartphones e computadores pessoais (PCs). A capacidade da GPU de realizar cálculos matemáticos complexos de forma rápida e eficiente reduz significativamente o tempo necessário para que um computador execute uma variedade de programas.(Caso de dúvidas, consultar o Problema 2) [Repositório PBL2](https://github.com/fabiomirs/PBL_2_Sistemas-Digitais)
 
 * Módulo kernel
-Um módulo de kernel é uma parte do sistema operacional que pode ser carregada e descarregada dinamicamente, permitindo adicionar ou remover funcionalidades sem precisar reiniciar o sistema. No contexto de Linux, esses módulos são usados para gerenciar hardware, como drivers de dispositivos, e executar tarefas específicas, aprimorando a flexibilidade e eficiência do sistema operacional.(Caso de dúvidas, consultar o Problema 2) [Pbl1](https://github.com/ValmirNogFilho/PBL_1_Sistemas-Digitais)
+Um módulo de kernel é uma parte do sistema operacional que pode ser carregada e descarregada dinamicamente, permitindo adicionar ou remover funcionalidades sem precisar reiniciar o sistema. No contexto de Linux, esses módulos são usados para gerenciar hardware, como drivers de dispositivos, e executar tarefas específicas, aprimorando a flexibilidade e eficiência do sistema operacional.(Caso de dúvidas, consultar o Problema 2) [Repositório PBL2](https://github.com/fabiomirs/PBL_2_Sistemas-Digitais)
 
 * Thread
 Uma thread é a menor unidade de processamento de um programa, permitindo a execução simultânea de várias tarefas dentro de um mesmo processo. As threads compartilham recursos como memória, mas têm suas próprias pilhas de execução. Isso permite que programas façam multitarefas de forma eficiente, melhorando o desempenho e a capacidade de resposta. As threads são amplamente usadas em aplicações que exigem operações concorrentes, como servidores web e interfaces gráficas.
@@ -104,4 +104,15 @@ O jogo termina se o jogador perder todas as vidas ou atingir 100 pontos.
 O desenvolvimento do jogo foi concluído com sucesso. A implementação atendeu  todos os requisitos estabelecidos. O alienígena se move corretamente na horizontal, os tiros são disparados e o jogador está restrito aos limites da tela. O placar de vidas e pontos é exibido corretamente no display de 7 segmentos. 
 Além disso, as ações de iniciar, pausar, continuar, reiniciar e encerrar o jogo funciona conforme projetado, permitindo ao jogador uma interação dinâmica com o jogo. A validação das funcionalidades foi bem-sucedida, e todas as interações foram implementadas de acordo com as especificações.
 Os testes realizados evidenciaram a eficiência e confiabilidade do sistema, validando sua capacidade de operar de forma consistente em diversas condições de jogo.
-Este projeto, além de alcançar seus objetivos iniciais, proporcionou um aprofundamento significativo dos conhecimentos em sistemas embarcados e arquitetura ARM. Ele capacitou os desenvolvedores a conciliar aspectos tanto de software quanto de hardware, estabelecendo uma base sólida para futuras explorações nas áreas de sistemas digitais e desenvolvimento de software
+Este projeto, além de alcançar seus objetivos iniciais, proporcionou um aprofundamento significativo dos conhecimentos em sistemas embarcados e arquitetura ARM. Ele capacitou os desenvolvedores a conciliar aspectos tanto de software quanto de hardware, estabelecendo uma base sólida para futuras explorações nas áreas de sistemas digitais e desenvolvimento de software.
+
+
+## Autores
+
+- Fábio Santos Miranda
+- Ícaro José Batista de Oliveira
+- Nalbert Santos Araujo
+- Valmir Alves Nogueira Filho
+
+
+
