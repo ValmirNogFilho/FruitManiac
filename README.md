@@ -71,7 +71,37 @@ Coletar Frutas: O jogador posiciona o alienígena para coletar frutas e ganhar p
 Pausa: O jogador pressiona o botão para pausar o jogo. O jogo é parado e  exibe a tela de pausa.
 Retorno: Durante a pausa, o jogador pode pressionar o botão de "Continuar" para retomar o jogo a partir do ponto em que foi pausado.
 Reinício: O jogador pode pressionar o botão de reiniciar para voltar ao jogo desde o início.
-*Tela de Pausa
+* Tela de Pausa
 O jogo é interrompido e a tela de pausa é exibida.
 * Fim do Jogo
 O jogo termina se o jogador perder todas as vidas ou atingir 100 pontos.
+
+## Algoritmos de Jogo:
+
+
+
+## Testes:
+
+- O alienígena só pode se movimentar na horizontal;
+- O alienígena só pode dar um tiro por vez;
+- O alienígena está limitado a ficar dentro da tela;
+- O placar de vidas é exibido no display de 7 segmentos;
+- O placar de pontos é exibido no display de 7 segmentos;
+- Os objetos são colocados em posições aleatórias no topo da tela; 
+- O jogo pode ser iniciado;
+- O jogo se estiver rodando, pode ser pausado;
+- Se um tiro acerta uma bomba ou diamante ou fruta ela é destruída;
+- O jogador perde 1 de vida sempre que um objeto chega ao chão;
+- O jogador perde vida se atirar em uma fruta;
+- O jogador ganha pontos quando o alienígena come as frutas, somando +1 ponto a cada fruta;
+- O jogo se estiver pausado, pode ser retomado do ponto em que foi pausado;
+- O jogo pode ser finalizado pelo jogador apertando um botão;
+- O jogo pode ser reiniciado;
+- O jogo pisca a tela para mostrar que perdeu uma vida;
+- O jogo é finalizado quando a quantidade de vidas chegam a zero;
+
+## Conclusão:
+O desenvolvimento do jogo foi concluído com sucesso. A implementação atendeu  todos os requisitos estabelecidos. O alienígena se move corretamente na horizontal, os tiros são disparados e o jogador está restrito aos limites da tela. O placar de vidas e pontos é exibido corretamente no display de 7 segmentos. 
+Além disso, as ações de iniciar, pausar, continuar, reiniciar e encerrar o jogo funciona conforme projetado, permitindo ao jogador uma interação dinâmica com o jogo. A validação das funcionalidades foi bem-sucedida, e todas as interações foram implementadas de acordo com as especificações.
+Os testes realizados evidenciaram a eficiência e confiabilidade do sistema, validando sua capacidade de operar de forma consistente em diversas condições de jogo.
+Este projeto, além de alcançar seus objetivos iniciais, proporcionou um aprofundamento significativo dos conhecimentos em sistemas embarcados e arquitetura ARM. Ele capacitou os desenvolvedores a conciliar aspectos tanto de software quanto de hardware, estabelecendo uma base sólida para futuras explorações nas áreas de sistemas digitais e desenvolvimento de software
