@@ -24,10 +24,10 @@ O Visual Studio Code, conhecido como VSCode, é um editor de código-fonte ampla
 ## Conceitos importantes:
 
 * GPU
-Unidade de processamento gráfico, também conhecida como GPU, é um componente eletrônico projetado para acelerar tarefas relacionadas à computação gráfica e ao processamento de imagens em uma ampla gama de dispositivos, incluindo placas de vídeo, placas-mãe, smartphones e computadores pessoais (PCs). A capacidade da GPU de realizar cálculos matemáticos complexos de forma rápida e eficiente reduz significativamente o tempo necessário para que um computador execute uma variedade de programas.(Caso de dúvidas, consultar o Problema 2) [Colocar o “Problema 2” Como um link]
+Unidade de processamento gráfico, também conhecida como GPU, é um componente eletrônico projetado para acelerar tarefas relacionadas à computação gráfica e ao processamento de imagens em uma ampla gama de dispositivos, incluindo placas de vídeo, placas-mãe, smartphones e computadores pessoais (PCs). A capacidade da GPU de realizar cálculos matemáticos complexos de forma rápida e eficiente reduz significativamente o tempo necessário para que um computador execute uma variedade de programas.(Caso de dúvidas, consultar o Problema 2) [rep pbl2](https://github.com/fabiomirs/PBL_2_Sistemas-Digitais)
 
 * Módulo kernel
-Um módulo de kernel é uma parte do sistema operacional que pode ser carregada e descarregada dinamicamente, permitindo adicionar ou remover funcionalidades sem precisar reiniciar o sistema. No contexto de Linux, esses módulos são usados para gerenciar hardware, como drivers de dispositivos, e executar tarefas específicas, aprimorando a flexibilidade e eficiência do sistema operacional.(Caso de dúvidas, consultar o Problema 2) [Colocar o “Problema 2” Como um link]
+Um módulo de kernel é uma parte do sistema operacional que pode ser carregada e descarregada dinamicamente, permitindo adicionar ou remover funcionalidades sem precisar reiniciar o sistema. No contexto de Linux, esses módulos são usados para gerenciar hardware, como drivers de dispositivos, e executar tarefas específicas, aprimorando a flexibilidade e eficiência do sistema operacional.(Caso de dúvidas, consultar o Problema 2) [Pbl1](https://github.com/ValmirNogFilho/PBL_1_Sistemas-Digitais)
 
 * Thread
 Uma thread é a menor unidade de processamento de um programa, permitindo a execução simultânea de várias tarefas dentro de um mesmo processo. As threads compartilham recursos como memória, mas têm suas próprias pilhas de execução. Isso permite que programas façam multitarefas de forma eficiente, melhorando o desempenho e a capacidade de resposta. As threads são amplamente usadas em aplicações que exigem operações concorrentes, como servidores web e interfaces gráficas.
@@ -52,11 +52,11 @@ No jogo, um alienígena se perde em um planeta desconhecido e estranho, onde, po
 
 - Regras do jogo:
     - O jogador começa com 5 vidas.
-    -Para vencer o jogo, é necessário alcançar 100 pontos antes de perder todas as vidas.
-    -O jogador pode disparar apenas um tiro por vez, até acertar um alvo ou sair da área de visão.
-    -O objetivo é destruir as bombas e diamantes antes que eles atinjam o chão ou o alienígena, para evitar perder vidas.
-    -Se o jogador acertar uma fruta ou permitir que ela caia no chão, perderá uma vida.
-    -O jogador deve posicionar o alienígena na direção das frutas para comê-las e ganhar pontos.
+    - Para vencer o jogo, é necessário alcançar 100 pontos antes de perder todas as vidas.
+    - O jogador pode disparar apenas um tiro por vez, até acertar um alvo ou sair da área de visão.
+    - O objetivo é destruir as bombas e diamantes antes que eles atinjam o chão ou o alienígena, para evitar perder vidas.
+    - Se o jogador acertar uma fruta ou permitir que ela caia no chão, perderá uma vida.
+    - O jogador deve posicionar o alienígena na direção das frutas para comê-las e ganhar pontos.
 
 ## Fluxo do jogo:
 
