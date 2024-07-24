@@ -115,4 +115,3 @@
     0 : I2C0 uses HPS Pins. 
     1 : I2C0 uses the FPGA Inteface. */
 #define SYSMGR_SPAN            0x00000800      // base
-

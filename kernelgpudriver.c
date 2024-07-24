@@ -59,8 +59,7 @@ deviceWrite(struct file* filp, const unsigned char *bufSourceData, size_t bufCou
 
     //lógica utilizada para evitar perca de dados quando a fifo está cheia
     while(*WR_FULL_PTR){ //enquanto a fifo estiver cheia continue no loop
-        msleep(10);     //dê um tempo para esvaziar
-        if(*WR_FULL_PTR == 0)// se a fifo estiver vazia, saia do while loop
+       if(*WR_FULL_PTR == 0)// se a fifo estiver vazia, saia do while loop
           break;
     }
 
