@@ -91,7 +91,7 @@ Fim do Jogo
 		</p>
 		<p align="center"><strong>Fonte: Autores
 		</strong></p>
-		O botão pause é o mais complexo dos 4, pois faz duas ações. Para os outros 3, a implementação é ligeraimente mais simples, mas utiliza conceitos parecidos.
+  		- O botão pause é o mais complexo dos 4, pois faz duas ações. Para os outros 3, a implementação é ligeraimente mais simples, mas utiliza conceitos parecidos.
 
 
 
