@@ -40,7 +40,7 @@ A seguir, serão apresentadas as descrições gerais dos periféricos utilizados
 
 <p align="center"><strong> Periféricos. </strong></p>
 <p align="center">
-  <img src="imagens/perifericos_de1soc.png.png" width = "400" />
+  <img src="imagens/perifericos_de1soc.png" width = "400" />
 </p>
 <p align="center"><strong>Fonte: Autores
 </strong></p>
