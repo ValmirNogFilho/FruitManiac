@@ -45,6 +45,13 @@ A seguir, serão apresentadas as descrições gerais dos periféricos utilizados
 * Botões
 	- A placa dispõe de quatro botões para a utilização. Quando um botão é pressionado, o bit correspondente é setado para 1, e quando o botão é solto, o bit é setado para 0.
 
+	<p align="center"><strong>Funcionamento botão - pause. </strong></p>
+	<p align="center">
+	  <img src="imagens/botaopause.drawio.png" width = "400" />
+	</p>
+	<p align="center"><strong>
+	</strong></p>
+
 
 ## 5- Conceito do jogo e suas regras:
 O jogo desenvolvido possui caráter autoral e representa uma criação inédita, intitulada Alien, Bomb & Fruit.
