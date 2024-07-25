@@ -62,6 +62,7 @@ No jogo, um alienígena se perde em um planeta desconhecido e estranho, onde, po
 
 Início do Jogo:
 * O jogador inicia o jogo pressionando o botão início na DE1-SoC.
+  
 Durante o Jogo
 * Movimentação e Ação: O jogador controla o alienígena usando movimento do mouse limitado em movimentar apenas na horizontal e apertando o botão esquerdo para fazer o disparo da arma laser.
 * Ações do Jogo:
