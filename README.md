@@ -118,10 +118,6 @@ Fim do Jogo
    
 			- Aleatoridade dos Sprites (Eixo x): Os sprites que caem recebem valores aleátoris e fixos para o eixo X, movendo-se somente na vertical, em queda.
 
-
-seteseg.drawio (1).png
-
-
 ## 8- Testes:
 	[Faltam as fotos para fazer as representações]
 O alienígena só pode se movimentar na horizontal;
