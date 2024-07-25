@@ -44,15 +44,6 @@ A seguir, serão apresentadas as descrições gerais dos periféricos utilizados
 	- Um display de sete segmentos, como seu nome indica, é composto de sete elementos, os quais podem ser ligados ou desligados individualmente. Eles podem ser combinados para produzir representações de número e/ou letras. 
 * Botões
 	- A placa dispõe de quatro botões para a utilização. Quando um botão é pressionado, o bit correspondente é setado para 1, e quando o botão é solto, o bit é setado para 0.
-
-	<p align="center"><strong>Funcionamento botão - pause. </strong></p>
-	<p align="center">
-	  <img src="imagens/botaopause.drawio.png" width = "400" />
-	</p>
-	<p align="center"><strong>
-	</strong></p>
-
-
 ## 5- Conceito do jogo e suas regras:
 O jogo desenvolvido possui caráter autoral e representa uma criação inédita, intitulada Alien, Bomb & Fruit.
 No jogo, um alienígena se perde em um planeta desconhecido e estranho, onde, por motivos inexplicáveis, bombas, diamantes e frutas caem do céu. Para sobreviver, o alienígena deve destruir as bombas e os diamantes afiados com sua arma de laser, enquanto come as frutas para sobreviver.
@@ -87,9 +78,23 @@ Fim do Jogo
 * O jogo termina se o jogador perder todas as vidas ou atingir 100 pontos.
 
 ## 7- Algoritmos de Jogo:
-[Falta esse tópico]
-Algoritmo de Colisão-
-Captura de dados contínua do mouse-
+
+* Usando Threads:
+	* Captura de dados contínua do mouse
+		- Para mover o personagem na tela, bem como atirar, foi lido o arquivo do event 0. Nesse arquivo é possível capturar tanto as cordenadas X-Y quanto o ''click'' do mouse.(Para entender mais, consultar o Problema 1) [Colocar o “Problema 1” Como um link]. O problema que a leitura do arquivo é feito por uma chamada de sistema (read), que quando não tem dados para serem lidos trava o fluxo do programa na linha do código referente a leitura. Sendo assim, para não atrapalhar a lógica de funcionamento do jogo em si, foi separado a leitura dos dados do mouse em uma thread, que lerá os dados do mouse e passará para a ''Thread principal'', que é a que lida com toda a lógica do jogo.
+	* Interagindo com os botões
+   		- Para os botões também foi implementada uma Thread. Essa thread carrega com si toda a lógica de captura de dados referentes aos botões - desde o mapeamento até a implementação de conceitos de máquinas de estado para obtenção dos dados. Como o laço gira infinitamente, o ato de pressionar o botão seria lido diversas vezes o que poderia ocasionar problemas, como no caso do botão pause, que também é responsável por ''despausar''. Para tratar disso foi criado uma variável de estado chamada "pauseState". Ela que vai limitar o ato de apertar o botão a uma só captura, o fluxograma abaixo ilustra seu funcionamento:
+  
+<p align="center"><strong>Funcionamento do botão pause. </strong></p>
+<p align="center">
+  <img src="imagens/botaopause.drawio.png" width = "400" />
+</p>
+<p align="center"><strong>Fonte: Autores
+</strong></p>
+
+
+
+  
 Solução Geral do projeto-
 
 
