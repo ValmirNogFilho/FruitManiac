@@ -81,9 +81,9 @@ Fim do Jogo
 
 * Usando Threads:
 	* Captura de dados contínua do mouse
-		- Para mover o personagem na tela, bem como atirar, foi lido o arquivo do event 0. Nesse arquivo é possível capturar tanto as cordenadas X-Y quanto o ''click'' do mouse.(Para entender mais, consultar o Problema 1) [Colocar o “Problema 1” Como um link]. O problema que a leitura do arquivo é feito por uma chamada de sistema (read), que quando não tem dados para serem lidos trava o fluxo do programa na linha do código referente a leitura. Sendo assim, para não atrapalhar a lógica de funcionamento do jogo em si, foi separado a leitura dos dados do mouse em uma thread, que lerá os dados do mouse e passará para a ''Thread principal'', que é a que lida com toda a lógica do jogo.
+		- Para mover o personagem na tela, bem como atirar, foi lido o arquivo do event 0. Nesse arquivo é possível capturar tanto as cordenadas X-Y quanto o ''click'' do mouse.(Para entender mais, consultar o Problema 1). O problema que a leitura do arquivo é feito por uma chamada de sistema (read), que quando não tem dados para serem lidos, trava o fluxo do programa na linha do código referente a leitura. Sendo assim, para não atrapalhar a lógica de funcionamento do jogo em si, foi separado a lógica de leitura dos dados do mouse em uma thread, que lerá os dados e passará para a ''Thread principal'', que é a responsável pela a lógica do jogo.
 	* Interagindo com os botões
-   		- Para os botões também foi implementada uma Thread. Essa thread carrega com si toda a lógica de captura de dados referentes aos botões - desde o mapeamento até a implementação de conceitos de máquinas de estado para obtenção dos dados. Como o laço gira infinitamente, o ato de pressionar o botão seria lido diversas vezes o que poderia ocasionar problemas, como no caso do botão pause, que também é responsável por ''despausar''. Para tratar disso foi criado uma variável de estado chamada "pauseState". Ela que vai limitar o ato de apertar o botão a uma só captura, o fluxograma abaixo ilustra seu funcionamento:
+   		- Para os botões também foi implementada uma Thread. Essa thread carrega em si toda a lógica de captura de dados referentes aos botões - desde o mapeamento até a implementação de conceitos de máquinas de estado para obtenção dos dados. Como o laço gira infinitamente, o ato de pressionar o botão seria lido diversas vezes o que poderia ocasionar problemas, como no caso do botão pause, que também é responsável por ''despausar''. Para tratar disso foi criado uma variável de estado chamada "pauseState". Ela que vai limitar o ato de apertar o botão a uma só captura, o fluxograma abaixo ilustra seu funcionamento:
   
 <p align="center"><strong>Funcionamento do botão pause. </strong></p>
 <p align="center">
@@ -91,6 +91,8 @@ Fim do Jogo
 </p>
 <p align="center"><strong>Fonte: Autores
 </strong></p>
+
+		- O botão pause é o mais complexo dos 4, pois faz duas ações. Para os outros 3, a implementação é ligeraimente mais simples, mas utiliza conceitos parecidos.
 
 
 
