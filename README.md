@@ -102,7 +102,7 @@ Fim do Jogo
   		- O botão pause é o mais complexo dos 4, pois faz duas ações. Para os outros 3, a implementação é ligeraimente mais simples, mas utiliza conceitos parecidos.
 	* Thread principal - O jogo
 		- Toda lógica do jogo é feita nessa parte.
-			-  Movimento dos Sprites: Para movimentar os sprites, as variáveis X e Y pertencente a esses sprites são modificadas e a uma instrução que lida com sprite é enviado para GPU, atualizando assim o Sprite na tela. Todos os sprites (jogador, tiro, bombas, frutas e diamantes) se movimentam dessa forma. O Fluxograma abaixo demonstra o funcionamento do movimento do player.
+			-  Movimento dos Sprites: Para movimentar os sprites, as variáveis X e Y pertencente a esses sprites são modificadas e uma instrução que lida com sprite é enviado para GPU, atualizando assim o Sprite na tela. Todos os sprites (jogador, tiro, bombas, frutas e diamantes) se movimentam dessa forma. O Fluxograma abaixo demonstra o funcionamento do movimento do player.
 
 			<p align="center"><strong> Movimento do player. </strong></p>
 			<p align="center">
@@ -131,7 +131,7 @@ Fim do Jogo
 			<p align="center"><strong>Fonte: Autores
 			</strong></p>
    
-			- Aleatoridade dos Sprites (Eixo x): Os sprites que caem recebem valores aleátoris e fixos para o eixo X, movendo-se somente na vertical, em queda.
+			- Aleatoridade dos Sprites (Eixo x): Os sprites que caem recebem valores aleátorios e fixos para o eixo X, movendo-se somente na vertical, em queda.
 
 ## 8- Testes:
 	[Faltam as fotos para fazer as representações]
