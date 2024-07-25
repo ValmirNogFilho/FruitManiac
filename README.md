@@ -72,8 +72,10 @@ Durante o Jogo
  	- Pausa: O jogador pressiona o botão para pausar o jogo. O jogo é parado e  exibe a tela de pausa.
 	- Retorno: Durante a pausa, o jogador pode pressionar o botão de "Continuar" para retomar o jogo a partir do ponto em que foi pausado.
 	- Reinício: O jogador pode pressionar o botão de reiniciar para voltar ao jogo desde o início.
+
 Tela de Pausa
 * O jogo é interrompido e a tela de pausa é exibida.
+  
 Fim do Jogo
 * O jogo termina se o jogador perder todas as vidas ou atingir 100 pontos.
 
