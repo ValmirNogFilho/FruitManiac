@@ -134,25 +134,20 @@ Fim do Jogo
 			- Aleatoridade dos Sprites (Eixo x): Os sprites que caem recebem valores aleátorios e fixos para o eixo X, movendo-se somente na vertical, em queda.
 
 ## 8- Testes:
-	[Faltam as fotos para fazer as representações]
-O alienígena só pode se movimentar na horizontal;
-O alienígena só pode dar um tiro por vez;
-O alienígena está limitado a ficar dentro da tela;
-O placar de vidas é exibido no display de 7 segmentos;
-O placar de pontos é exibido no display de 7 segmentos;
-Os objetos são colocados em posições aleatórias no topo da tela; 
-O jogo pode ser iniciado;
-O jogo se estiver rodando, pode ser pausado;
-Se um tiro acerta uma bomba ou diamante ou fruta ela é destruída;
-O jogador perde 1 de vida sempre que um objeto chega ao chão;
-O jogador perde vida se atirar em uma fruta;
-O jogador ganha pontos quando o alienígena come as frutas, somando +1 ponto a cada fruta;
-O jogo se estiver pausado, pode ser retomado do ponto em que foi pausado;
-O jogo pode ser finalizado pelo jogador apertando um botão;
-O jogo pode ser reiniciado;
-O jogo pisca a tela para mostrar que perdeu uma vida. 
-O jogo é finalizado quando a quantidade de vidas chegam a zero;
-O jogo termina quando o jogador atinge 100 pontos 
+<ul>
+	<li>Player pega fruta e ganha ponto</li>
+	<li>Player pega bomba e perde vida</li>
+	<li>Player dá tiro em fruta e perde vida</li>
+	<li>Player dá tiro em bomba e ganha ponto</li>
+	<li>Player dá tiro em diamante e perde vida</li>
+	<li>Player pega diamante e ganha vida </li>
+	<li>Player deixa qualquer item cair e perde vida</li>
+	<li>Velocidade aumenta a cada 15 pontos</li>
+	<li>Número de elementos na tela aumenta a cada 5 pontos</li>
+	<li>Player morre com 0 vidas</li>
+	<li>Player pode reiniciar, pausar, sair, começar o jogo</li>
+	<li>Exibição de pontos e vidas no display de 7 segmentos</li>
+</ul>
 
 ## 9- Conclusão:
 O desenvolvimento do jogo foi concluído com sucesso. A implementação atendeu  todos os requisitos estabelecidos. O alienígena se move corretamente na horizontal, os tiros são disparados e o jogador está restrito aos limites da tela. O placar de vidas e pontos é exibido corretamente no display de 7 segmentos. 
