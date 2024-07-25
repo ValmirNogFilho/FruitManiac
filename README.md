@@ -95,7 +95,15 @@ Fim do Jogo
   		- O botão pause é o mais complexo dos 4, pois faz duas ações. Para os outros 3, a implementação é ligeraimente mais simples, mas utiliza conceitos parecidos.
 	* Thread principal - O jogo
 		- Toda lógica do jogo é feita nessa parte.
-			-  Movimento dos Sprites: Para movimentar os sprites, as variáveis X e Y pertencente a esses sprites são modificadas e a uma instrução que lida com sprite é enviado para GPU, atualizando assim o Sprite na tela. Todos os sprites (jogador, tiro, bombas, frutas e diamantes) se movimentam dessa forma.
+			-  Movimento dos Sprites: Para movimentar os sprites, as variáveis X e Y pertencente a esses sprites são modificadas e a uma instrução que lida com sprite é enviado para GPU, atualizando assim o Sprite na tela. Todos os sprites (jogador, tiro, bombas, frutas e diamantes) se movimentam dessa forma. O Fluxograma abaixo demonstra o funcionamento do movimento do player:
+   -  
+			<p align="center"><strong> Movimento do player. </strong></p>
+			<p align="center">
+			  <img src="imagens/movim.drawio.png" width = "400" />
+			</p>
+			<p align="center"><strong>Fonte: Autores
+			</strong></p>
+   
   			- Aumento de dificuldade: O jogo tem um sistema de ''balanceamento''. No início, existe somente um ''elemento de queda''. A cada 5 pontos é adicionado outro Sprite à queda, até que 9 ''elementos em queda'' estejam na tela. Existe também uma lógica de aumento de velocidade a cada 15 pontos, mas que é limitada depois de 2 vezes usada.
 			- Lógica de colisão: Foi implementada um sistema de colisão. Essa colisão é aplicada entre o tiro e algum "elemento em queda" ou entre algum "elemento em queda" e o player.  
 			- Verificando altura dos elementos: Se os elementos atravessarem a linha que o player deve defender, uma vida é perdida.
