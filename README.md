@@ -38,6 +38,13 @@ Nesse contexto, foi proposto o desenvolvimento de um jogo utilizando a linguagem
 
 A seguir, serão apresentadas as descrições gerais dos periféricos utilizados na placa DE1-SoC. A figura abaixo mostra a placa FPGA, com indicações dos dispositivos que serão descritos.
 
+<p align="center"><strong> Periféricos. </strong></p>
+<p align="center">
+  <img src="imagens/perifericos_de1soc.png.png" width = "400" />
+</p>
+<p align="center"><strong>Fonte: Autores
+</strong></p>
+   
 * Saída VGA:
 	- A saída VGA (Video Graphics Array) é uma interface padrão para transmitir sinais de vídeo de dispositivos como computadores para monitores. Ela utiliza um conector de 15 pinos e suporta resoluções de vídeo de até 640x480 pixels, mas também pode ser usada para resoluções mais altas. É uma tecnologia analógica, o que significa que a qualidade da imagem pode ser afetada por interferências.
 * Display de 7 seg:
