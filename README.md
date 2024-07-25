@@ -106,7 +106,7 @@ Fim do Jogo
 
 			<p align="center"><strong> Movimento do player. </strong></p>
 			<p align="center">
-			  <img src="imagens/movim.drawio.png" width = "400" />
+			  <img src="imagens/movim.drawio (1).png" width = "400" />
 			</p>
 			<p align="center"><strong>Fonte: Autores
 			</strong></p>
