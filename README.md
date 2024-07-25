@@ -84,7 +84,7 @@ Tela de Pausa
 Fim do Jogo
 * O jogo termina se o jogador perder todas as vidas ou atingir 100 pontos.
 
-## 7- Algoritmos de Jogo:
+## 7- Implementando o Jogo:
 
 * Usando Threads:
 	* Captura de dados contínua do mouse
