@@ -111,7 +111,7 @@ Fim do Jogo
 
 			<p align="center"><strong> Exibindo no display. </strong></p>
 			<p align="center">
-			  <img src="imagens/seteseg.drawio (1).png" width = "400" />
+			  <img src="imagens/seteseg.drawio (1).png" width = "200" />
 			</p>
 			<p align="center"><strong>Fonte: Autores
 			</strong></p>
