@@ -50,11 +50,11 @@ No jogo, um alienígena se perde em um planeta desconhecido e estranho, onde, po
 
 * Regras do jogo:
 	- O jogador começa com 5 vidas.
-	- Para vencer o jogo, é necessário alcançar 100 pontos antes de perder todas as vidas.
 	- O jogador pode disparar apenas um tiro por vez, até acertar um alvo ou sair da área de visão.
-	- O objetivo é destruir as bombas e diamantes antes que eles atinjam o chão ou o alienígena, para evitar perder vidas.
+	- O objetivo é destruir as bombas antes que eles atinjam o chão ou o alienígena, para evitar perder vidas.
 	- Se o jogador acertar uma fruta ou permitir que ela caia no chão, perderá uma vida.
 	- O jogador deve posicionar o alienígena na direção das frutas para comê-las e ganhar pontos.
+	- O jogador deve posicionar o alienígena na direção do diamante para ganhar vidas.
 
 ## 6- Fluxo do jogo:
 
@@ -93,11 +93,15 @@ Fim do Jogo
 		</strong></p>
   
   		- O botão pause é o mais complexo dos 4, pois faz duas ações. Para os outros 3, a implementação é ligeraimente mais simples, mas utiliza conceitos parecidos.
-	* Thread principal - Jogando o jogo
+	* Thread principal - O jogo
+		- Toda lógica do jogo é feita nessa parte.
+			-  Movimento dos Sprites: Para movimentar os sprites, as variáveis X e Y pertencente a esses sprites são modificadas e a uma instrução que lida com sprite é enviado para GPU, atualizando assim o Sprite na tela. Todos os sprites (jogador, tiro, bombas, frutas e diamantes) se movimentam dessa forma.
+  			- Aumento de dificuldade: O jogo tem um sistema de ''balanceamento''. No início, existe somente um ''elemento de queda''. A cada 5 pontos é adicionado outro Sprite à queda, até que 9 ''elementos em queda'' estejam na tela. Existe também uma lógica de aumento de velocidade a cada 15 pontos, mas que é limitada depois de 2 vezes usada.
+			- Lógica de colisão: Foi implementada um sistema de colisão. Essa colisão é aplicada entre o tiro e algum "elemento em queda" ou entre algum "elemento em queda" e o player.  
+			- Verificando altura dos elementos: Se os elementos atravessarem a linha que o player deve defender, uma vida é perdida.
+			- "Quebra do score" e exibição no display de 7-segmentos: O score é "quebrado" em unidades, dezenas e centenas, esses valores são associados a um binário referente esse número (na notação do 7-segmento) e passado para os displays. O mesmo é feito para vida, com a diferença que a vida ta limitada somente á unidade.
+			- Aleatoridade dos Sprites (Eixo x): Os sprites que caem recebem valores aleátoris e fixos para o eixo X, movendo-se somente na vertical, em queda.
 
-
-  
-Solução Geral do projeto-
 
 
 ## 8- Testes:
