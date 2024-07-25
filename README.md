@@ -1,9 +1,10 @@
-1-Introdução: 
+# Sistema digital
+## 1-Introdução: 
 Atualmente, os jogos eletrônicos estão se tornando cada vez mais populares. De acordo com um relatório da consultoria Newzoo, até o final de 2023, o número de jogadores pode ter atingido 3,3 bilhões, o que representa mais de 40% da população mundial. No aspecto econômico, estima-se que esse número de jogadores tenha gerado cerca de US$188 bilhões no ano passado.
 O Brasil também segue essa tendência global, sendo o principal mercado de jogos da América Latina desde 2021. Aproximadamente 70% da população brasileira participa de algum tipo de jogo, de acordo com a Pesquisa Game Brasil (PGB) de 2023.
 Nesse contexto, foi proposto o desenvolvimento de um jogo utilizando a linguagem C, empregando o módulo kernel criado no Problema 2 para comunicação com a unidade de processamento gráfico (GPU). O objetivo é criar sprites personalizados para o jogo. O controle do jogo será feito por meio do mouse, e as informações da partida, como vidas e quantidade de pontos do jogador, serão exibidas em um display de 7 segmentos.
 
-2- Descrição dos equipamentos e softwares utilizados:
+## 2- Descrição dos equipamentos e softwares utilizados:
 
 Placa DE1-SoC 
 O kit de desenvolvimento DE1-SoC é uma placa que combina um processador ARM Cortex-A9 dual-core com um FPGA Cyclone V da Intel. Este kit oferece uma ampla gama de periféricos, incluindo portas VGA, Ethernet, USB e de áudio, o que a torna ideal para projetos que integram tanto software quanto hardware. É amplamente utilizado em ambientes educacionais e de pesquisa para o desenvolvimento e aprendizado em sistemas embarcados e FPGA, fornecendo uma plataforma robusta e versátil para experimentação e prototipagem.
@@ -20,7 +21,7 @@ Visual Studio Code (VSCode)
 O Visual Studio Code, conhecido como VSCode, é um editor de código-fonte amplamente utilizado e desenvolvido pela Microsoft. É um editor gratuito e de código aberto que oferece uma variedade de recursos. O VSCode é compatível com diversas linguagens de programação e pode ser altamente personalizado por meio de extensões. No projeto, o VSCode foi utilizado para desenvolver o código-fonte do jogo.
 
 
-3- Conceitos importantes:
+## 3- Conceitos importantes:
 
 GPU
 Unidade de processamento gráfico, também conhecida como GPU, é um componente eletrônico projetado para acelerar tarefas relacionadas à computação gráfica e ao processamento de imagens em uma ampla gama de dispositivos, incluindo placas de vídeo, placas-mãe, smartphones e computadores pessoais (PCs). A capacidade da GPU de realizar cálculos matemáticos complexos de forma rápida e eficiente reduz significativamente o tempo necessário para que um computador execute uma variedade de programas.(Caso de dúvidas, consultar o Problema 2) [Colocar o “Problema 2” Como um link]
@@ -34,7 +35,7 @@ Uma thread é a menor unidade de processamento de um programa, permitindo a exec
 Colisão em jogos
 	Uma colisão refere-se ao evento em que dois ou mais objetos, personagens ou entidades no jogo se encontram ou se sobrepõem de maneira significativa. A detecção e a manipulação de colisões são fundamentais para a mecânica e a jogabilidade nos jogos, afetando como os elementos do jogo interagem entre si e com o ambiente.
 
-4- Periféricos da Placa DE1-SoC Utilizados:
+## 4- Periféricos da Placa DE1-SoC Utilizados:
 
 A seguir, serão apresentadas as descrições gerais dos periféricos utilizados na placa DE1-SoC. A figura abaixo mostra a placa FPGA, com indicações dos dispositivos que serão descritos.
 
@@ -46,7 +47,7 @@ Botões
 A placa dispõe de quatro botões para a utilização. Quando um botão é pressionado, o bit correspondente é setado para 1, e quando o botão é solto, o bit é setado para 0.
 
 
-5- Conceito do jogo e suas regras:
+## 5- Conceito do jogo e suas regras:
 O jogo desenvolvido possui caráter autoral e representa uma criação inédita, intitulada Alien, Bomb & Fruit.
 No jogo, um alienígena se perde em um planeta desconhecido e estranho, onde, por motivos inexplicáveis, bombas, diamantes e frutas caem do céu. Para sobreviver, o alienígena deve destruir as bombas e os diamantes afiados com sua arma de laser, enquanto come as frutas para sobreviver.
 
@@ -58,7 +59,7 @@ O objetivo é destruir as bombas e diamantes antes que eles atinjam o chão ou o
 Se o jogador acertar uma fruta ou permitir que ela caia no chão, perderá uma vida.
 O jogador deve posicionar o alienígena na direção das frutas para comê-las e ganhar pontos.
 
-6- Fluxo do jogo:
+## 6- Fluxo do jogo:
 
 Início do Jogo:
 O jogador inicia o jogo pressionando o botão início na DE1-SoC.
@@ -76,14 +77,14 @@ O jogo é interrompido e a tela de pausa é exibida.
 Fim do Jogo
 O jogo termina se o jogador perder todas as vidas ou atingir 100 pontos.
 
-7- Algoritmos de Jogo:
+## 7- Algoritmos de Jogo:
 [Falta esse tópico]
 Algoritmo de Colisão-
 Captura de dados contínua do mouse-
 Solução Geral do projeto-
 
 
-8- Testes:
+## 8- Testes:
 	[Faltam as fotos para fazer as representações]
 O alienígena só pode se movimentar na horizontal;
 O alienígena só pode dar um tiro por vez;
@@ -104,13 +105,13 @@ O jogo pisca a tela para mostrar que perdeu uma vida.
 O jogo é finalizado quando a quantidade de vidas chegam a zero;
 O jogo termina quando o jogador atinge 100 pontos 
 
-9- Conclusão:
+## 9- Conclusão:
 O desenvolvimento do jogo foi concluído com sucesso. A implementação atendeu  todos os requisitos estabelecidos. O alienígena se move corretamente na horizontal, os tiros são disparados e o jogador está restrito aos limites da tela. O placar de vidas e pontos é exibido corretamente no display de 7 segmentos. 
 Além disso, as ações de iniciar, pausar, continuar, reiniciar e encerrar o jogo funciona conforme projetado, permitindo ao jogador uma interação dinâmica com o jogo. A validação das funcionalidades foi bem-sucedida, e todas as interações foram implementadas de acordo com as especificações.
 Os testes realizados evidenciaram a eficiência e confiabilidade do sistema, validando sua capacidade de operar de forma consistente em diversas condições de jogo.
 Este projeto, além de alcançar seus objetivos iniciais, proporcionou um aprofundamento significativo dos conhecimentos em sistemas embarcados e arquitetura ARM. Ele capacitou os desenvolvedores a conciliar aspectos tanto de software quanto de hardware, estabelecendo uma base sólida para futuras explorações nas áreas de sistemas digitais e desenvolvimento de software.
 
-10- Referências:
+## 10- Referências:
  
 https://pinboard.opera.com/view/13ed1720-4607-4ad7-8c6c-518e6695adf4
 
