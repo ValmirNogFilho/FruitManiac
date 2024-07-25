@@ -112,7 +112,15 @@ Fim do Jogo
 			</strong></p>
    
   			- Aumento de dificuldade: O jogo tem um sistema de ''balanceamento''. No início, existe somente um ''elemento de queda''. A cada 5 pontos é adicionado outro Sprite à queda, até que 9 ''elementos em queda'' estejam na tela. Existe também uma lógica de aumento de velocidade a cada 15 pontos, mas que é limitada depois de 2 vezes usada.
-			- Lógica de colisão: Foi implementada um sistema de colisão. Essa colisão é aplicada entre o tiro e algum "elemento em queda" ou entre algum "elemento em queda" e o player.  
+			- Lógica de colisão: Foi implementada um sistema de colisão. Essa colisão é aplicada entre o tiro e algum "elemento em queda" ou entre algum "elemento em queda" e o player.
+
+				<p align="center"><strong> Colisão. </strong></p>
+				<p align="center">
+				  <img src="imagens/colisao_sprites.png" width = "400" />
+				</p>
+				<p align="center"><strong>Fonte: Autores
+				</strong></p>
+   
 			- Verificando altura dos elementos: Se os elementos atravessarem a linha que o player deve defender, uma vida é perdida.
 			- "Quebra do score" e exibição no display de 7-segmentos: O score é "quebrado" em unidades, dezenas e centenas, esses valores são associados a um binário referente a esse número (na notação do 7-segmento) que é passado para os displays. O mesmo é feito para vida, com a diferença que a vida está limitada somente a unidade.
 
