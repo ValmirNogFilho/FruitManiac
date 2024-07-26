@@ -71,7 +71,7 @@ Início do Jogo:
 Durante o Jogo
 * Movimentação e Ação: O jogador controla o alienígena usando movimento do mouse limitado em movimentar apenas na horizontal e apertando o botão esquerdo para fazer o disparo da arma laser.
 * Ações do Jogo:
-	- Destruir Bombas e Diamantes: O jogador dispara tiros para destruir bombas e diamantes.
+	- Destruir Bombas: O jogador dispara tiros para destruir bombas.
 	- Coletar Frutas: O jogador posiciona o alienígena para coletar frutas e ganhar pontos.
 * Controle de Jogo:
  	- Pausa: O jogador pressiona o botão para pausar o jogo. O jogo é parado e  exibe a tela de pausa.
@@ -82,7 +82,7 @@ Tela de Pausa
 * O jogo é interrompido e a tela de pausa é exibida.
   
 Fim do Jogo
-* O jogo termina se o jogador perder todas as vidas ou atingir 100 pontos.
+* O jogo termina se o jogador perder todas as vidas.
 
 ## 7- Implementando o Jogo:
 
