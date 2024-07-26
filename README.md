@@ -165,6 +165,12 @@ https://github.com/user-attachments/assets/15597602-d2fa-49f1-9999-d55cf04e16ab
 
 
 <li>Player deixa qualquer item cair e perde vida</li>
+
+
+https://github.com/user-attachments/assets/c040b025-766b-4614-a0eb-3d9515ebfd29
+
+
+<li>Placa de pontos ganhos e vidas</li>
  
 
 https://github.com/user-attachments/assets/11fa8e7e-8dab-406f-87ed-854cb09091e9
