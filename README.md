@@ -132,7 +132,10 @@ Fim do Jogo
 			</strong></p>
    
 			- Aleatoridade dos Sprites (Eixo x): Os sprites que caem recebem valores aleátorios e fixos para o eixo X, movendo-se somente na vertical, em queda.
-
+## 7.1 Implementando o Jogo - Construindo um Sprite
+* Primeira Fase - No primeiro momento de construção dos Sprites das frutas, foi usado um site para desenho do Sprite nas dimensões 20x20 (tamanho de um sprite na memória de sprite).
+* Segunda Fase - Nessa fase, foi criado um script em "Python" que lê o RGB daquela imagem e escreve em um arquivo. Cada linha desse arquivo equivale um pixel na memória de sprite. O arquivo tem 400 linhas.
+* Terceira Fase - Nesse momento foi feito um método em "C" para ler o arquivo. Ele lê cada linha (RGB) e já insere-as na instrução "setPixelOnSpriteMemory".
 ## 8- Testes:
 <ul>	
 	<li>Exibição de pontos e vidas no display de 7 segmentos</li>
