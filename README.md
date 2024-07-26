@@ -134,19 +134,19 @@ Fim do Jogo
 			- Aleatoridade dos Sprites (Eixo x): Os sprites que caem recebem valores aleátorios e fixos para o eixo X, movendo-se somente na vertical, em queda.
 
 ## 8- Testes:
-<ul>
-	<li>Player pega fruta e ganha ponto</li>
-	<li>Player pega bomba e perde vida</li>
-	<li>Player dá tiro em fruta e perde vida</li>
-	<li>Player dá tiro em bomba e ganha ponto</li>
-	<li>Player dá tiro em diamante e perde vida</li>
-	<li>Player pega diamante e ganha vida </li>
-	<li>Player deixa qualquer item cair e perde vida</li>
-	<li>Velocidade aumenta a cada 15 pontos</li>
-	<li>Número de elementos na tela aumenta a cada 5 pontos</li>
-	<li>Player morre com 0 vidas</li>
-	<li>Player pode reiniciar, pausar, sair, começar o jogo</li>
+<ul>	
 	<li>Exibição de pontos e vidas no display de 7 segmentos</li>
+	<li>Player pega fruta e ganha ponto</li>
+	<li>-Player pega bomba e perde vida</li>
+	<li>-Player dá tiro em fruta e perde vida</li>
+	<li>-Player dá tiro em bomba e ganha ponto</li>
+	<li>-Player dá tiro em diamante e perde vida</li>
+	<li>-Player pega diamante e ganha vida </li>
+	<li>-Player deixa qualquer item cair e perde vida</li>
+	<li>-Número de elementos na tela aumenta a cada 5 pontos</li>
+	<li>-Player morre com 0 vidas</li>
+	<li>Player pode reiniciar, pausar, sair, começar o jogo</li>
+	
 </ul>
 
 ## 9- Conclusão:
