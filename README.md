@@ -112,7 +112,7 @@ Fim do Jogo
 			</strong></p>
    
   			- Aumento de dificuldade: O jogo tem um sistema de ''balanceamento''. No início, existe somente um ''elemento de queda''. A cada 5 pontos é adicionado outro Sprite à queda, até que 9 ''elementos em queda'' estejam na tela. Existe também uma lógica de aumento de velocidade a cada 15 pontos, mas que é limitada depois de 2 vezes usada.
-			- Lógica de colisão: Foi implementada um sistema de colisão. Essa colisão é aplicada entre o tiro e algum "elemento em queda" ou entre algum "elemento em queda" e o player.
+			- Lógica de colisão: Foi implementada um sistema de colisão. Essa colisão é aplicada entre o tiro e algum "elemento em queda" ou entre algum "elemento em queda" e o player. Basicamente, o teste de colisão baseia-se nas dimensões fixas dos sprites (20x20): quando a distância em x e em y - simultaneamente - entre ambos sprites for inferior a 20 pixels, está matematicamente provado que uma colisão ocorreu. Para a lógica do jogo, que inicia com os itens na tela invisíveis, também é testado se os dois elementos possivelmente colidindo estão visíveis ao usuário (ou seja, a instrução enviada a gpu indica que o sprite deve ser vísivel).
 
 				<p align="center"><strong> Colisão. </strong></p>
 				<p align="center">
