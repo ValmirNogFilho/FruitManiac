@@ -23,10 +23,10 @@ Nesse contexto, foi proposto o desenvolvimento de um jogo utilizando a linguagem
 ## 3- Conceitos importantes:
 
 * GPU
-	- Unidade de processamento gráfico, também conhecida como GPU, é um componente eletrônico projetado para acelerar tarefas relacionadas à computação gráfica e ao processamento de imagens em uma ampla gama de dispositivos, incluindo placas de vídeo, placas-mãe, smartphones e computadores pessoais (PCs). A capacidade da GPU de realizar cálculos matemáticos complexos de forma rápida e eficiente reduz significativamente o tempo necessário para que um computador execute uma variedade de programas.(Caso de dúvidas, consultar o Problema 2) [Colocar o “Problema 2” Como um link]
+	- Unidade de processamento gráfico, também conhecida como GPU, é um componente eletrônico projetado para acelerar tarefas relacionadas à computação gráfica e ao processamento de imagens em uma ampla gama de dispositivos, incluindo placas de vídeo, placas-mãe, smartphones e computadores pessoais (PCs). A capacidade da GPU de realizar cálculos matemáticos complexos de forma rápida e eficiente reduz significativamente o tempo necessário para que um computador execute uma variedade de programas.(Caso de dúvidas, consultar o Problema 2)
 
 * Módulo kernel
-	- Um módulo de kernel é uma parte do sistema operacional que pode ser carregada e descarregada dinamicamente, permitindo adicionar ou remover funcionalidades sem precisar reiniciar o sistema. No contexto de Linux, esses módulos são usados para gerenciar hardware, como drivers de dispositivos, e executar tarefas específicas, aprimorando a flexibilidade e eficiência do sistema operacional.(Caso de dúvidas, consultar o Problema 2) [Colocar o “Problema 2” Como um link]
+	- Um módulo de kernel é uma parte do sistema operacional que pode ser carregada e descarregada dinamicamente, permitindo adicionar ou remover funcionalidades sem precisar reiniciar o sistema. No contexto de Linux, esses módulos são usados para gerenciar hardware, como drivers de dispositivos, e executar tarefas específicas, aprimorando a flexibilidade e eficiência do sistema operacional.(Caso de dúvidas, consultar o Problema 2)
 
 * Thread
 	- Uma thread é a menor unidade de processamento de um programa, permitindo a execução simultânea de várias tarefas dentro de um mesmo processo. As threads compartilham recursos como memória, mas têm suas próprias pilhas de execução. Isso permite que programas façam multitarefas de forma eficiente, melhorando o desempenho e a capacidade de resposta. As threads são amplamente usadas em aplicações que exigem operações concorrentes, como servidores web e interfaces gráficas.
@@ -136,17 +136,55 @@ Fim do Jogo
 ## 8- Testes:
 <ul>	
 	<li>Exibição de pontos e vidas no display de 7 segmentos</li>
+	![display](https://github.com/user-attachments/assets/28260640-4f4a-4ca6-97f3-db1c2f64a339)
 	<li>Player pega fruta e ganha ponto</li>
+
+https://github.com/user-attachments/assets/0f56f44d-a7ed-4b19-90dd-b9d1e7e8be4e
+
 	<li>-Player pega bomba e perde vida</li>
+ ![image](https://github.com/user-attachments/assets/dbd246d9-b8b2-4617-91b7-c705cbc71577)
+
 	<li>-Player dá tiro em fruta e perde vida</li>
+ 
+
+https://github.com/user-attachments/assets/6283e144-3a0a-4493-baea-1b328be74bbb
+
+
 	<li>-Player dá tiro em bomba e ganha ponto</li>
+ 
+
+https://github.com/user-attachments/assets/0f2626ef-894a-4827-beb8-1264f83e8525
+
+
 	<li>-Player dá tiro em diamante e perde vida</li>
-	<li>-Player pega diamante e ganha vida </li>
+ 
+
+https://github.com/user-attachments/assets/15597602-d2fa-49f1-9999-d55cf04e16ab
+
+
 	<li>-Player deixa qualquer item cair e perde vida</li>
+ 
+
+https://github.com/user-attachments/assets/11fa8e7e-8dab-406f-87ed-854cb09091e9
+
+
 	<li>-Número de elementos na tela aumenta a cada 5 pontos</li>
+ 
+
+https://github.com/user-attachments/assets/e8c626f0-41af-4bed-813b-1b80442ae8b9
+
+
 	<li>-Player morre com 0 vidas</li>
+ 
+
+https://github.com/user-attachments/assets/00a7a7d7-8496-4484-b541-10689928de71
+
+
 	<li>Player pode reiniciar, pausar, sair, começar o jogo</li>
-	
+	![pause](https://github.com/user-attachments/assets/39bc48f1-fc33-4b10-99ff-bedf027694c1)
+	![reinicio](https://github.com/user-attachments/assets/65cea5f3-8e6d-458f-8389-0cf045f0c0fd)
+	![startend](https://github.com/user-attachments/assets/26b1ef59-5d9e-4157-a77a-60671a64cdeb)
+
 </ul>
 
 ## 9- Conclusão:
